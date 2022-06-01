@@ -1,0 +1,2808 @@
+<html>
+    <head>
+        <title>Baalorlord Thumbnail Generator</title>
+
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+        <style>
+            @font-face {
+                font-family: 'Merriweather-Heavy';
+                src:url('./fonts/Merriweather-Heavy.ttf.woff') format('woff'),
+                    url('./fonts/Merriweather-Heavy.ttf.svg#Merriweather-Heavy') format('svg'),
+                    url('./fonts/Merriweather-Heavy.ttf.eot'),
+                    url('./fonts/Merriweather-Heavy.ttf.eot?#iefix') format('embedded-opentype'); 
+                font-weight: normal;
+                font-style: normal;
+            }
+            fieldset {
+                margin: 0px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/json" id="baalorlord-faces">
+            {
+                "baalorlord_hm": {
+                    "label": "Hm...",
+                    "image": "./images/baalorlord/baalorlord_hm.png"
+                },
+                "baalorlord_woot": {
+                    "label": "w00t?!",
+                    "image": "./images/baalorlord/baalorlord_woot.png"
+                }
+            }
+        </script>
+        <script type="text/json" id="ironclad-cards">
+            {
+                "anger": {
+                    "label": "Anger",
+                    "image": "./images/ironclad/Anger.png"
+                },
+                "armaments": {
+                    "label": "Armaments",
+                    "image": "./images/ironclad/Armaments.png"
+                },
+                "barricade": {
+                    "label": "Barricade",
+                    "image": "./images/ironclad/Barricade.png"
+                },
+                "bash": {
+                    "label": "Bash",
+                    "image": "./images/ironclad/Bash.png"
+                },
+                "battletrance": {
+                    "label": "Battle Trance",
+                    "image": "./images/ironclad/BattleTrance.png"
+                },
+                "berserk": {
+                    "label": "Berserk",
+                    "image": "./images/ironclad/Berserk.png"
+                },
+                "bloodforblood": {
+                    "label": "Blood for Blood",
+                    "image": "./images/ironclad/BloodforBlood.png"
+                },
+                "bloodletting": {
+                    "label": "Bloodletting",
+                    "image": "./images/ironclad/Bloodletting.png"
+                },
+                "bludgeon": {
+                    "label": "Bludgeon",
+                    "image": "./images/ironclad/Bludgeon.png"
+                },
+                "bodyslam": {
+                    "label": "Body Slam",
+                    "image": "./images/ironclad/BodySlam.png"
+                },
+                "brutality": {
+                    "label": "Brutality",
+                    "image": "./images/ironclad/Brutality.png"
+                },
+                "burningpact": {
+                    "label": "Burning Pact",
+                    "image": "./images/ironclad/BurningPact.png"
+                },
+                "carnage": {
+                    "label": "Carnage",
+                    "image": "./images/ironclad/Carnage.png"
+                },
+                "clash": {
+                    "label": "Clash",
+                    "image": "./images/ironclad/Clash.png"
+                },
+                "cleave": {
+                    "label": "Cleave",
+                    "image": "./images/ironclad/Cleave.png"
+                },
+                "clothesline": {
+                    "label": "Clothesline",
+                    "image": "./images/ironclad/Clothesline.png"
+                },
+                "combust": {
+                    "label": "Combust",
+                    "image": "./images/ironclad/Combust.png"
+                },
+                "corruption": {
+                    "label": "Corruption",
+                    "image": "./images/ironclad/Corruption.png"
+                },
+                "darkembrace": {
+                    "label": "Dark Embrace",
+                    "image": "./images/ironclad/DarkEmbrace.png"
+                },
+                "defend": {
+                    "label": "Defend",
+                    "image": "./images/ironclad/Defend_R.png"
+                },
+                "demonform": {
+                    "label": "Demon Form",
+                    "image": "./images/ironclad/DemonForm.png"
+                },
+                "disarm": {
+                    "label": "Disarm",
+                    "image": "./images/ironclad/Disarm.png"
+                },
+                "doubletap": {
+                    "label": "Double Tap",
+                    "image": "./images/ironclad/DoubleTap.png"
+                },
+                "dropkick": {
+                    "label": "Dropkick",
+                    "image": "./images/ironclad/Dropkick.png"
+                },
+                "dualwield": {
+                    "label": "Dual Wield",
+                    "image": "./images/ironclad/DualWield.png"
+                },
+                "entrench": {
+                    "label": "Entrench",
+                    "image": "./images/ironclad/Entrench.png"
+                },
+                "evolve": {
+                    "label": "Evolve",
+                    "image": "./images/ironclad/Evolve.png"
+                },
+                "exhume": {
+                    "label": "Exhume",
+                    "image": "./images/ironclad/Exhume.png"
+                },
+                "feed": {
+                    "label": "Feed",
+                    "image": "./images/ironclad/Feed.png"
+                },
+                "feelnopain": {
+                    "label": "Feel No Pain",
+                    "image": "./images/ironclad/FeelNoPain.png"
+                },
+                "fiendfire": {
+                    "label": "Fiend Fire",
+                    "image": "./images/ironclad/FiendFire.png"
+                },
+                "firebreathing": {
+                    "label": "Fire Breathing",
+                    "image": "./images/ironclad/FireBreathing.png"
+                },
+                "flamebarrier": {
+                    "label": "Flame Barrier",
+                    "image": "./images/ironclad/FlameBarrier.png"
+                },
+                "flex": {
+                    "label": "Flex",
+                    "image": "./images/ironclad/Flex.png"
+                },
+                "ghostlyarmor": {
+                    "label": "Ghostly Armor",
+                    "image": "./images/ironclad/GhostlyArmor.png"
+                },
+                "havoc": {
+                    "label": "Havoc",
+                    "image": "./images/ironclad/Havoc.png"
+                },
+                "headbutt": {
+                    "label": "Headbutt",
+                    "image": "./images/ironclad/Headbutt.png"
+                },
+                "heavyblade": {
+                    "label": "Heavy Blade",
+                    "image": "./images/ironclad/HeavyBlade.png"
+                },
+                "hemokinesis": {
+                    "label": "Hemokinesis",
+                    "image": "./images/ironclad/Hemokinesis.png"
+                },
+                "immolate": {
+                    "label": "Immolate",
+                    "image": "./images/ironclad/Immolate.png"
+                },
+                "impervious": {
+                    "label": "Impervious",
+                    "image": "./images/ironclad/Impervious.png"
+                },
+                "infernalblade": {
+                    "label": "Infernal Blade",
+                    "image": "./images/ironclad/InfernalBlade.png"
+                },
+                "inflame": {
+                    "label": "Inflame",
+                    "image": "./images/ironclad/Inflame.png"
+                },
+                "intimidate": {
+                    "label": "Intimidate",
+                    "image": "./images/ironclad/Intimidate.png"
+                },
+                "ironwave": {
+                    "label": "Iron Wave",
+                    "image": "./images/ironclad/IronWave.png"
+                },
+                "juggernaut": {
+                    "label": "Juggernaut",
+                    "image": "./images/ironclad/Juggernaut.png"
+                },
+                "limitbreak": {
+                    "label": "Limit Break",
+                    "image": "./images/ironclad/LimitBreak.png"
+                },
+                "metallicize": {
+                    "label": "Metallicize",
+                    "image": "./images/ironclad/Metallicize.png"
+                },
+                "offering": {
+                    "label": "Offering",
+                    "image": "./images/ironclad/Offering.png"
+                },
+                "perfectedstrike": {
+                    "label": "Perfected Strike",
+                    "image": "./images/ironclad/PerfectedStrike.png"
+                },
+                "pommelstrike": {
+                    "label": "Pommel Strike",
+                    "image": "./images/ironclad/PommelStrike.png"
+                },
+                "powerthrough": {
+                    "label": "Power Through",
+                    "image": "./images/ironclad/PowerThrough.png"
+                },
+                "pummel": {
+                    "label": "Pummel",
+                    "image": "./images/ironclad/Pummel.png"
+                },
+                "rage": {
+                    "label": "Rage",
+                    "image": "./images/ironclad/Rage.png"
+                },
+                "rampage": {
+                    "label": "Rampage",
+                    "image": "./images/ironclad/Rampage.png"
+                },
+                "reaper": {
+                    "label": "Reaper",
+                    "image": "./images/ironclad/Reaper.png"
+                },
+                "recklesscharge": {
+                    "label": "Reckless Charge",
+                    "image": "./images/ironclad/RecklessCharge.png"
+                },
+                "rupture": {
+                    "label": "Rupture",
+                    "image": "./images/ironclad/Rupture.png"
+                },
+                "searingblow": {
+                    "label": "Searing Blow",
+                    "image": "./images/ironclad/SearingBlow.png"
+                },
+                "secondwind": {
+                    "label": "Second Wind",
+                    "image": "./images/ironclad/SecondWind.png"
+                },
+                "seeingred": {
+                    "label": "Seeing Red",
+                    "image": "./images/ironclad/SeeingRed.png"
+                },
+                "sentinel": {
+                    "label": "Sentinel",
+                    "image": "./images/ironclad/Sentinel.png"
+                },
+                "seversoul": {
+                    "label": "Sever Soul",
+                    "image": "./images/ironclad/SeverSoul.png"
+                },
+                "shockwave": {
+                    "label": "Shockwave",
+                    "image": "./images/ironclad/Shockwave.png"
+                },
+                "shrugitoff": {
+                    "label": "Shrug It Off",
+                    "image": "./images/ironclad/ShrugItOff.png"
+                },
+                "spotweakness": {
+                    "label": "Spot Weakness",
+                    "image": "./images/ironclad/SpotWeakness.png"
+                },
+                "strike": {
+                    "label": "Strike",
+                    "image": "./images/ironclad/Strike_R.png"
+                },
+                "swordboomerang": {
+                    "label": "Sword Boomerang",
+                    "image": "./images/ironclad/SwordBoomerang.png"
+                },
+                "thunderclap": {
+                    "label": "Thunderclap",
+                    "image": "./images/ironclad/Thunderclap.png"
+                },
+                "truegrit": {
+                    "label": "True Grit",
+                    "image": "./images/ironclad/TrueGrit.png"
+                },
+                "twinstrike": {
+                    "label": "Twin Strike",
+                    "image": "./images/ironclad/TwinStrike.png"
+                },
+                "uppercut": {
+                    "label": "Uppercut",
+                    "image": "./images/ironclad/Uppercut.png"
+                },
+                "warcry": {
+                    "label": "Warcry",
+                    "image": "./images/ironclad/Warcry.png"
+                },
+                "whirlwind": {
+                    "label": "Whirlwind",
+                    "image": "./images/ironclad/Whirlwind.png"
+                },
+                "wildstrike": {
+                    "label": "Wild Strike",
+                    "image": "./images/ironclad/WildStrike.png"
+                }
+            }
+        </script>
+        <script type="text/json" id="silent-cards">
+            {
+                "athousandcuts": {
+                    "label": "AThousand Cuts",
+                    "image": "./images/silent/AThousandCuts.png"
+                },
+                "accuracy": {
+                    "label": "Accuracy",
+                    "image": "./images/silent/Accuracy.png"
+                },
+                "acrobatics": {
+                    "label": "Acrobatics",
+                    "image": "./images/silent/Acrobatics.png"
+                },
+                "adrenaline": {
+                    "label": "Adrenaline",
+                    "image": "./images/silent/Adrenaline.png"
+                },
+                "afterimage": {
+                    "label": "After Image",
+                    "image": "./images/silent/AfterImage.png"
+                },
+                "alchemize": {
+                    "label": "Alchemize",
+                    "image": "./images/silent/Alchemize.png"
+                },
+                "all-outattack": {
+                    "label": "All -Out Attack",
+                    "image": "./images/silent/All-OutAttack.png"
+                },
+                "backflip": {
+                    "label": "Backflip",
+                    "image": "./images/silent/Backflip.png"
+                },
+                "backstab": {
+                    "label": "Backstab",
+                    "image": "./images/silent/Backstab.png"
+                },
+                "bane": {
+                    "label": "Bane",
+                    "image": "./images/silent/Bane.png"
+                },
+                "bladedance": {
+                    "label": "Blade Dance",
+                    "image": "./images/silent/BladeDance.png"
+                },
+                "blur": {
+                    "label": "Blur",
+                    "image": "./images/silent/Blur.png"
+                },
+                "bouncingflask": {
+                    "label": "Bouncing Flask",
+                    "image": "./images/silent/BouncingFlask.png"
+                },
+                "bullettime": {
+                    "label": "Bullet Time",
+                    "image": "./images/silent/BulletTime.png"
+                },
+                "burst": {
+                    "label": "Burst",
+                    "image": "./images/silent/Burst.png"
+                },
+                "calculatedgamble": {
+                    "label": "Calculated Gamble",
+                    "image": "./images/silent/CalculatedGamble.png"
+                },
+                "caltrops": {
+                    "label": "Caltrops",
+                    "image": "./images/silent/Caltrops.png"
+                },
+                "catalyst": {
+                    "label": "Catalyst",
+                    "image": "./images/silent/Catalyst.png"
+                },
+                "choke": {
+                    "label": "Choke",
+                    "image": "./images/silent/Choke.png"
+                },
+                "cloakanddagger": {
+                    "label": "Cloak And Dagger",
+                    "image": "./images/silent/CloakAndDagger.png"
+                },
+                "concentrate": {
+                    "label": "Concentrate",
+                    "image": "./images/silent/Concentrate.png"
+                },
+                "corpseexplosion": {
+                    "label": "Corpse Explosion",
+                    "image": "./images/silent/CorpseExplosion.png"
+                },
+                "cripplingcloud": {
+                    "label": "Crippling Cloud",
+                    "image": "./images/silent/CripplingCloud.png"
+                },
+                "daggerspray": {
+                    "label": "Dagger Spray",
+                    "image": "./images/silent/DaggerSpray.png"
+                },
+                "dash": {
+                    "label": "Dash",
+                    "image": "./images/silent/Dash.png"
+                },
+                "deadlypoison": {
+                    "label": "Deadly Poison",
+                    "image": "./images/silent/DeadlyPoison.png"
+                },
+                "defend": {
+                    "label": "Defend",
+                    "image": "./images/silent/Defend_G.png"
+                },
+                "deflect": {
+                    "label": "Deflect",
+                    "image": "./images/silent/Deflect.png"
+                },
+                "diediedie": {
+                    "label": "Die Die Die",
+                    "image": "./images/silent/DieDieDie.png"
+                },
+                "distraction": {
+                    "label": "Distraction",
+                    "image": "./images/silent/Distraction.png"
+                },
+                "dodgeandroll": {
+                    "label": "Dodgeand Roll",
+                    "image": "./images/silent/DodgeandRoll.png"
+                },
+                "doppelganger": {
+                    "label": "Doppelganger",
+                    "image": "./images/silent/Doppelganger.png"
+                },
+                "endlessagony": {
+                    "label": "Endless Agony",
+                    "image": "./images/silent/EndlessAgony.png"
+                },
+                "envenom": {
+                    "label": "Envenom",
+                    "image": "./images/silent/Envenom.png"
+                },
+                "escapeplan": {
+                    "label": "Escape Plan",
+                    "image": "./images/silent/EscapePlan.png"
+                },
+                "eviscerate": {
+                    "label": "Eviscerate",
+                    "image": "./images/silent/Eviscerate.png"
+                },
+                "expertise": {
+                    "label": "Expertise",
+                    "image": "./images/silent/Expertise.png"
+                },
+                "finisher": {
+                    "label": "Finisher",
+                    "image": "./images/silent/Finisher.png"
+                },
+                "flechettes": {
+                    "label": "Flechettes",
+                    "image": "./images/silent/Flechettes.png"
+                },
+                "flyingknee": {
+                    "label": "Flying Knee",
+                    "image": "./images/silent/FlyingKnee.png"
+                },
+                "footwork": {
+                    "label": "Footwork",
+                    "image": "./images/silent/Footwork.png"
+                },
+                "glassknife": {
+                    "label": "Glass Knife",
+                    "image": "./images/silent/GlassKnife.png"
+                },
+                "grandfinale": {
+                    "label": "Grand Finale",
+                    "image": "./images/silent/GrandFinale.png"
+                },
+                "heelhook": {
+                    "label": "Heel Hook",
+                    "image": "./images/silent/HeelHook.png"
+                },
+                "infiniteblades": {
+                    "label": "Infinite Blades",
+                    "image": "./images/silent/InfiniteBlades.png"
+                },
+                "legsweep": {
+                    "label": "Leg Sweep",
+                    "image": "./images/silent/LegSweep.png"
+                },
+                "malaise": {
+                    "label": "Malaise",
+                    "image": "./images/silent/Malaise.png"
+                },
+                "masterfulstab": {
+                    "label": "Masterful Stab",
+                    "image": "./images/silent/MasterfulStab.png"
+                },
+                "neutralize": {
+                    "label": "Neutralize",
+                    "image": "./images/silent/Neutralize.png"
+                },
+                "nightmare": {
+                    "label": "Nightmare",
+                    "image": "./images/silent/Nightmare.png"
+                },
+                "noxiousfumes": {
+                    "label": "Noxious Fumes",
+                    "image": "./images/silent/NoxiousFumes.png"
+                },
+                "outmaneuver": {
+                    "label": "Outmaneuver",
+                    "image": "./images/silent/Outmaneuver.png"
+                },
+                "phantasmalkiller": {
+                    "label": "Phantasmal Killer",
+                    "image": "./images/silent/PhantasmalKiller.png"
+                },
+                "piercingwail": {
+                    "label": "Piercing Wail",
+                    "image": "./images/silent/PiercingWail.png"
+                },
+                "poisonedstab": {
+                    "label": "Poisoned Stab",
+                    "image": "./images/silent/PoisonedStab.png"
+                },
+                "predator": {
+                    "label": "Predator",
+                    "image": "./images/silent/Predator.png"
+                },
+                "prepared": {
+                    "label": "Prepared",
+                    "image": "./images/silent/Prepared.png"
+                },
+                "quickslash": {
+                    "label": "Quick Slash",
+                    "image": "./images/silent/QuickSlash.png"
+                },
+                "ragger-throw": {
+                    "label": "Ragger -throw",
+                    "image": "./images/silent/R_dagger-throw.png"
+                },
+                "reflex": {
+                    "label": "Reflex",
+                    "image": "./images/silent/Reflex.png"
+                },
+                "riddlewithholes": {
+                    "label": "Riddle With Holes",
+                    "image": "./images/silent/RiddleWithHoles.png"
+                },
+                "setup": {
+                    "label": "Setup",
+                    "image": "./images/silent/Setup.png"
+                },
+                "skewer": {
+                    "label": "Skewer",
+                    "image": "./images/silent/Skewer.png"
+                },
+                "slice": {
+                    "label": "Slice",
+                    "image": "./images/silent/Slice.png"
+                },
+                "sneakystrike": {
+                    "label": "Sneaky Strike",
+                    "image": "./images/silent/SneakyStrike.png"
+                },
+                "stormofsteel": {
+                    "label": "Stormof Steel",
+                    "image": "./images/silent/StormofSteel.png"
+                },
+                "strike": {
+                    "label": "Strike",
+                    "image": "./images/silent/Strike_G.png"
+                },
+                "suckerpunch": {
+                    "label": "Sucker Punch",
+                    "image": "./images/silent/SuckerPunch.png"
+                },
+                "survivor": {
+                    "label": "Survivor",
+                    "image": "./images/silent/Survivor.png"
+                },
+                "tactician": {
+                    "label": "Tactician",
+                    "image": "./images/silent/Tactician.png"
+                },
+                "terror": {
+                    "label": "Terror",
+                    "image": "./images/silent/Terror.png"
+                },
+                "toolsofthetrade": {
+                    "label": "Toolsofthe Trade",
+                    "image": "./images/silent/ToolsoftheTrade.png"
+                },
+                "unload": {
+                    "label": "Unload",
+                    "image": "./images/silent/Unload.png"
+                },
+                "well-laidplans": {
+                    "label": "Well -Laid Plans",
+                    "image": "./images/silent/Well-LaidPlans.png"
+                },
+                "wraithform": {
+                    "label": "Wraith Form",
+                    "image": "./images/silent/WraithForm.png"
+                }
+            }
+        </script>
+        <script type="text/json" id="defect-cards">
+            {
+                "aggregate": {
+                    "label": "Aggregate",
+                    "image": "./images/defect/Aggregate.png"
+                },
+                "allforone": {
+                    "label": "Allfor One",
+                    "image": "./images/defect/AllforOne.png"
+                },
+                "amplify": {
+                    "label": "Amplify",
+                    "image": "./images/defect/Amplify.png"
+                },
+                "auto-shields": {
+                    "label": "Auto -Shields",
+                    "image": "./images/defect/Auto-Shields.png"
+                },
+                "balllightning": {
+                    "label": "Ball Lightning",
+                    "image": "./images/defect/BallLightning.png"
+                },
+                "barrage": {
+                    "label": "Barrage",
+                    "image": "./images/defect/Barrage.png"
+                },
+                "beamcell": {
+                    "label": "Beam Cell",
+                    "image": "./images/defect/BeamCell.png"
+                },
+                "biasedcognition": {
+                    "label": "Biased Cognition",
+                    "image": "./images/defect/BiasedCognition.png"
+                },
+                "blizzard": {
+                    "label": "Blizzard",
+                    "image": "./images/defect/Blizzard.png"
+                },
+                "bootsequence": {
+                    "label": "Boot Sequence",
+                    "image": "./images/defect/BootSequence.png"
+                },
+                "buffer": {
+                    "label": "Buffer",
+                    "image": "./images/defect/Buffer.png"
+                },
+                "bullseye": {
+                    "label": "Bulls Eye",
+                    "image": "./images/defect/BullsEye.png"
+                },
+                "capacitor": {
+                    "label": "Capacitor",
+                    "image": "./images/defect/Capacitor.png"
+                },
+                "chaos": {
+                    "label": "Chaos",
+                    "image": "./images/defect/Chaos.png"
+                },
+                "chargebattery": {
+                    "label": "Charge Battery",
+                    "image": "./images/defect/ChargeBattery.png"
+                },
+                "chill": {
+                    "label": "Chill",
+                    "image": "./images/defect/Chill.png"
+                },
+                "claw": {
+                    "label": "Claw",
+                    "image": "./images/defect/Claw.png"
+                },
+                "coldsnap": {
+                    "label": "Cold Snap",
+                    "image": "./images/defect/ColdSnap.png"
+                },
+                "compiledriver": {
+                    "label": "Compile Driver",
+                    "image": "./images/defect/CompileDriver.png"
+                },
+                "consume": {
+                    "label": "Consume",
+                    "image": "./images/defect/Consume.png"
+                },
+                "coolheaded": {
+                    "label": "Coolheaded",
+                    "image": "./images/defect/Coolheaded.png"
+                },
+                "coresurge": {
+                    "label": "Core Surge",
+                    "image": "./images/defect/CoreSurge.png"
+                },
+                "creativeai": {
+                    "label": "Creative AI",
+                    "image": "./images/defect/CreativeAI.png"
+                },
+                "darkness": {
+                    "label": "Darkness",
+                    "image": "./images/defect/Darkness.png"
+                },
+                "defend": {
+                    "label": "Defend",
+                    "image": "./images/defect/Defend_B.png"
+                },
+                "defragment": {
+                    "label": "Defragment",
+                    "image": "./images/defect/Defragment.png"
+                },
+                "doomandgloom": {
+                    "label": "Doomand Gloom",
+                    "image": "./images/defect/DoomandGloom.png"
+                },
+                "doubleenergy": {
+                    "label": "Double Energy",
+                    "image": "./images/defect/DoubleEnergy.png"
+                },
+                "dualcast": {
+                    "label": "Dualcast",
+                    "image": "./images/defect/Dualcast.png"
+                },
+                "echoform": {
+                    "label": "Echo Form",
+                    "image": "./images/defect/EchoForm.png"
+                },
+                "electrodynamics": {
+                    "label": "Electrodynamics",
+                    "image": "./images/defect/Electrodynamics.png"
+                },
+                "equilibrium": {
+                    "label": "Equilibrium",
+                    "image": "./images/defect/Equilibrium.png"
+                },
+                "ftl": {
+                    "label": "FTL",
+                    "image": "./images/defect/FTL.png"
+                },
+                "fission": {
+                    "label": "Fission",
+                    "image": "./images/defect/Fission.png"
+                },
+                "forcefield": {
+                    "label": "Force Field",
+                    "image": "./images/defect/ForceField.png"
+                },
+                "fusion": {
+                    "label": "Fusion",
+                    "image": "./images/defect/Fusion.png"
+                },
+                "geneticalgorithm": {
+                    "label": "Genetic Algorithm",
+                    "image": "./images/defect/GeneticAlgorithm.png"
+                },
+                "glacier": {
+                    "label": "Glacier",
+                    "image": "./images/defect/Glacier.png"
+                },
+                "gofortheeyes": {
+                    "label": "Goforthe Eyes",
+                    "image": "./images/defect/GofortheEyes.png"
+                },
+                "heatsinks": {
+                    "label": "Heatsinks",
+                    "image": "./images/defect/Heatsinks.png"
+                },
+                "helloworld": {
+                    "label": "Hello World",
+                    "image": "./images/defect/HelloWorld.png"
+                },
+                "hologram-0": {
+                    "label": "Hologram -0",
+                    "image": "./images/defect/Hologram-0.png"
+                },
+                "hyperbeam": {
+                    "label": "Hyperbeam",
+                    "image": "./images/defect/Hyperbeam.png"
+                },
+                "leap": {
+                    "label": "Leap",
+                    "image": "./images/defect/Leap.png"
+                },
+                "loop": {
+                    "label": "Loop",
+                    "image": "./images/defect/Loop.png"
+                },
+                "machinelearning": {
+                    "label": "Machine Learning",
+                    "image": "./images/defect/MachineLearning.png"
+                },
+                "melter": {
+                    "label": "Melter",
+                    "image": "./images/defect/Melter.png"
+                },
+                "meteorstrike": {
+                    "label": "Meteor Strike",
+                    "image": "./images/defect/MeteorStrike.png"
+                },
+                "multi-cast": {
+                    "label": "Multi -Cast",
+                    "image": "./images/defect/Multi-Cast.png"
+                },
+                "overclock": {
+                    "label": "Overclock",
+                    "image": "./images/defect/Overclock.png"
+                },
+                "rainbow": {
+                    "label": "Rainbow",
+                    "image": "./images/defect/Rainbow.png"
+                },
+                "reboot": {
+                    "label": "Reboot",
+                    "image": "./images/defect/Reboot.png"
+                },
+                "rebound": {
+                    "label": "Rebound",
+                    "image": "./images/defect/Rebound.png"
+                },
+                "recursion": {
+                    "label": "Recursion",
+                    "image": "./images/defect/Recursion.png"
+                },
+                "recycle": {
+                    "label": "Recycle",
+                    "image": "./images/defect/Recycle.png"
+                },
+                "reinforcedbody": {
+                    "label": "Reinforced Body",
+                    "image": "./images/defect/ReinforcedBody.png"
+                },
+                "reprogram": {
+                    "label": "Reprogram",
+                    "image": "./images/defect/Reprogram.png"
+                },
+                "ripandtear": {
+                    "label": "Ripand Tear",
+                    "image": "./images/defect/RipandTear.png"
+                },
+                "scrape": {
+                    "label": "Scrape",
+                    "image": "./images/defect/Scrape.png"
+                },
+                "seek": {
+                    "label": "Seek",
+                    "image": "./images/defect/Seek.png"
+                },
+                "selfrepair": {
+                    "label": "Self Repair",
+                    "image": "./images/defect/SelfRepair.png"
+                },
+                "skim": {
+                    "label": "Skim",
+                    "image": "./images/defect/Skim.png"
+                },
+                "stack": {
+                    "label": "Stack",
+                    "image": "./images/defect/Stack.png"
+                },
+                "staticdischarge": {
+                    "label": "Static Discharge",
+                    "image": "./images/defect/StaticDischarge.png"
+                },
+                "steambarrier": {
+                    "label": "Steam Barrier",
+                    "image": "./images/defect/SteamBarrier.png"
+                },
+                "storm": {
+                    "label": "Storm",
+                    "image": "./images/defect/Storm.png"
+                },
+                "streamline": {
+                    "label": "Streamline",
+                    "image": "./images/defect/Streamline.png"
+                },
+                "strike": {
+                    "label": "Strike",
+                    "image": "./images/defect/Strike_B.png"
+                },
+                "sunder": {
+                    "label": "Sunder",
+                    "image": "./images/defect/Sunder.png"
+                },
+                "sweepingbeam": {
+                    "label": "Sweeping Beam",
+                    "image": "./images/defect/SweepingBeam.png"
+                },
+                "turbo": {
+                    "label": "TURBO",
+                    "image": "./images/defect/TURBO.png"
+                },
+                "tempest": {
+                    "label": "Tempest",
+                    "image": "./images/defect/Tempest.png"
+                },
+                "thunderstrike": {
+                    "label": "Thunder Strike",
+                    "image": "./images/defect/ThunderStrike.png"
+                },
+                "whitenoise": {
+                    "label": "White Noise",
+                    "image": "./images/defect/WhiteNoise.png"
+                },
+                "zap": {
+                    "label": "Zap",
+                    "image": "./images/defect/Zap.png"
+                }
+            }
+        </script>
+        <script type="text/json" id="watcher-cards">
+            {
+                "alpha": {
+                    "label": "Alpha",
+                    "image": "./images/watcher/Alpha.png"
+                },
+                "battlehymn": {
+                    "label": "Battle Hymn",
+                    "image": "./images/watcher/BattleHymn.png"
+                },
+                "blasphemy": {
+                    "label": "Blasphemy",
+                    "image": "./images/watcher/Blasphemy.png"
+                },
+                "bowlingbash": {
+                    "label": "Bowling Bash",
+                    "image": "./images/watcher/BowlingBash.png"
+                },
+                "brilliance": {
+                    "label": "Brilliance",
+                    "image": "./images/watcher/Brilliance.png"
+                },
+                "carvereality": {
+                    "label": "Carve Reality",
+                    "image": "./images/watcher/CarveReality.png"
+                },
+                "collect": {
+                    "label": "Collect",
+                    "image": "./images/watcher/Collect.png"
+                },
+                "conclude": {
+                    "label": "Conclude",
+                    "image": "./images/watcher/Conclude.png"
+                },
+                "conjureblade": {
+                    "label": "Conjure Blade",
+                    "image": "./images/watcher/ConjureBlade.png"
+                },
+                "consecrate": {
+                    "label": "Consecrate",
+                    "image": "./images/watcher/Consecrate.png"
+                },
+                "crescendo": {
+                    "label": "Crescendo",
+                    "image": "./images/watcher/Crescendo.png"
+                },
+                "crushjoints": {
+                    "label": "Crush Joints",
+                    "image": "./images/watcher/CrushJoints.png"
+                },
+                "cutthroughfate": {
+                    "label": "Cut Through Fate",
+                    "image": "./images/watcher/CutThroughFate.png"
+                },
+                "deceivereality": {
+                    "label": "Deceive Reality",
+                    "image": "./images/watcher/DeceiveReality.png"
+                },
+                "defend": {
+                    "label": "Defend",
+                    "image": "./images/watcher/Defend_P.png"
+                },
+                "deusexmachina": {
+                    "label": "Deus Ex Machina",
+                    "image": "./images/watcher/DeusExMachina.png"
+                },
+                "devaform": {
+                    "label": "Deva Form",
+                    "image": "./images/watcher/DevaForm.png"
+                },
+                "devotion": {
+                    "label": "Devotion",
+                    "image": "./images/watcher/Devotion.png"
+                },
+                "emptybody": {
+                    "label": "Empty Body",
+                    "image": "./images/watcher/EmptyBody.png"
+                },
+                "emptyfist": {
+                    "label": "Empty Fist",
+                    "image": "./images/watcher/EmptyFist.png"
+                },
+                "emptymind": {
+                    "label": "Empty Mind",
+                    "image": "./images/watcher/EmptyMind.png"
+                },
+                "eruption": {
+                    "label": "Eruption",
+                    "image": "./images/watcher/Eruption.png"
+                },
+                "establishment": {
+                    "label": "Establishment",
+                    "image": "./images/watcher/Establishment.png"
+                },
+                "evaluate": {
+                    "label": "Evaluate",
+                    "image": "./images/watcher/Evaluate.png"
+                },
+                "fasting": {
+                    "label": "Fasting",
+                    "image": "./images/watcher/Fasting.png"
+                },
+                "fearnoevil": {
+                    "label": "Fear No Evil",
+                    "image": "./images/watcher/FearNoEvil.png"
+                },
+                "flurryofblows": {
+                    "label": "Flurry Of Blows",
+                    "image": "./images/watcher/FlurryOfBlows.png"
+                },
+                "flyingsleeves": {
+                    "label": "Flying Sleeves",
+                    "image": "./images/watcher/FlyingSleeves.png"
+                },
+                "follow-up": {
+                    "label": "Follow -Up",
+                    "image": "./images/watcher/Follow-Up.png"
+                },
+                "foreigninfluence": {
+                    "label": "Foreign Influence",
+                    "image": "./images/watcher/ForeignInfluence.png"
+                },
+                "foresight": {
+                    "label": "Foresight",
+                    "image": "./images/watcher/Foresight.png"
+                },
+                "halt": {
+                    "label": "Halt",
+                    "image": "./images/watcher/Halt.png"
+                },
+                "indignation": {
+                    "label": "Indignation",
+                    "image": "./images/watcher/Indignation.png"
+                },
+                "innerpeace": {
+                    "label": "Inner Peace",
+                    "image": "./images/watcher/InnerPeace.png"
+                },
+                "judgment": {
+                    "label": "Judgment",
+                    "image": "./images/watcher/Judgment.png"
+                },
+                "justlucky": {
+                    "label": "Just Lucky",
+                    "image": "./images/watcher/JustLucky.png"
+                },
+                "lessonlearned": {
+                    "label": "Lesson Learned",
+                    "image": "./images/watcher/LessonLearned.png"
+                },
+                "likewater": {
+                    "label": "Like Water",
+                    "image": "./images/watcher/LikeWater.png"
+                },
+                "masterreality": {
+                    "label": "Master Reality",
+                    "image": "./images/watcher/MasterReality.png"
+                },
+                "meditate": {
+                    "label": "Meditate",
+                    "image": "./images/watcher/Meditate.png"
+                },
+                "mentalfortress": {
+                    "label": "Mental Fortress",
+                    "image": "./images/watcher/MentalFortress.png"
+                },
+                "nirvana": {
+                    "label": "Nirvana",
+                    "image": "./images/watcher/Nirvana.png"
+                },
+                "omniscience": {
+                    "label": "Omniscience",
+                    "image": "./images/watcher/Omniscience.png"
+                },
+                "perseverance": {
+                    "label": "Perseverance",
+                    "image": "./images/watcher/Perseverance.png"
+                },
+                "pray": {
+                    "label": "Pray",
+                    "image": "./images/watcher/Pray.png"
+                },
+                "pressurepoints": {
+                    "label": "Pressure Points",
+                    "image": "./images/watcher/PressurePoints.png"
+                },
+                "prostrate": {
+                    "label": "Prostrate",
+                    "image": "./images/watcher/Prostrate.png"
+                },
+                "protect": {
+                    "label": "Protect",
+                    "image": "./images/watcher/Protect.png"
+                },
+                "ragnarok": {
+                    "label": "Ragnarok",
+                    "image": "./images/watcher/Ragnarok.png"
+                },
+                "reachheaven": {
+                    "label": "Reach Heaven",
+                    "image": "./images/watcher/ReachHeaven.png"
+                },
+                "rushdown": {
+                    "label": "Rushdown",
+                    "image": "./images/watcher/Rushdown.png"
+                },
+                "sanctity": {
+                    "label": "Sanctity",
+                    "image": "./images/watcher/Sanctity.png"
+                },
+                "sandsoftime": {
+                    "label": "Sandsof Time",
+                    "image": "./images/watcher/SandsofTime.png"
+                },
+                "sashwhip": {
+                    "label": "Sash Whip",
+                    "image": "./images/watcher/SashWhip.png"
+                },
+                "scrawl": {
+                    "label": "Scrawl",
+                    "image": "./images/watcher/Scrawl.png"
+                },
+                "signaturemove": {
+                    "label": "Signature Move",
+                    "image": "./images/watcher/SignatureMove.png"
+                },
+                "simmeringfury": {
+                    "label": "Simmering Fury",
+                    "image": "./images/watcher/SimmeringFury.png"
+                },
+                "spiritshield": {
+                    "label": "Spirit Shield",
+                    "image": "./images/watcher/SpiritShield.png"
+                },
+                "strike": {
+                    "label": "Strike",
+                    "image": "./images/watcher/Strike_P.png"
+                },
+                "study": {
+                    "label": "Study",
+                    "image": "./images/watcher/Study.png"
+                },
+                "swivel": {
+                    "label": "Swivel",
+                    "image": "./images/watcher/Swivel.png"
+                },
+                "talktothehand": {
+                    "label": "Talktothe Hand",
+                    "image": "./images/watcher/TalktotheHand.png"
+                },
+                "tantrum": {
+                    "label": "Tantrum",
+                    "image": "./images/watcher/Tantrum.png"
+                },
+                "thirdeye": {
+                    "label": "Third Eye",
+                    "image": "./images/watcher/ThirdEye.png"
+                },
+                "tranquility": {
+                    "label": "Tranquility",
+                    "image": "./images/watcher/Tranquility.png"
+                },
+                "vault": {
+                    "label": "Vault",
+                    "image": "./images/watcher/Vault.png"
+                },
+                "vigilance": {
+                    "label": "Vigilance",
+                    "image": "./images/watcher/Vigilance.png"
+                },
+                "wallop": {
+                    "label": "Wallop",
+                    "image": "./images/watcher/Wallop.png"
+                },
+                "waveofthehand": {
+                    "label": "Waveofthe Hand",
+                    "image": "./images/watcher/WaveoftheHand.png"
+                },
+                "weave": {
+                    "label": "Weave",
+                    "image": "./images/watcher/Weave.png"
+                },
+                "wheelkick": {
+                    "label": "Wheel Kick",
+                    "image": "./images/watcher/WheelKick.png"
+                },
+                "windmillstrike": {
+                    "label": "Windmill Strike",
+                    "image": "./images/watcher/WindmillStrike.png"
+                },
+                "wish": {
+                    "label": "Wish",
+                    "image": "./images/watcher/Wish.png"
+                },
+                "worship": {
+                    "label": "Worship",
+                    "image": "./images/watcher/Worship.png"
+                },
+                "wreathofflame": {
+                    "label": "Wreathof Flame",
+                    "image": "./images/watcher/WreathofFlame.png"
+                }
+            }
+        </script>
+        <script type="text/json" id="colorless-cards">
+            {
+                "apotheosis": {
+                    "label": "Apotheosis",
+                    "image": "./images/colorless/Apotheosis.png"
+                },
+                "apparition": {
+                    "label": "Apparition",
+                    "image": "./images/colorless/Apparition.png"
+                },
+                "bandageup": {
+                    "label": "Bandage Up",
+                    "image": "./images/colorless/BandageUp.png"
+                },
+                "beta": {
+                    "label": "Beta",
+                    "image": "./images/colorless/Beta.png"
+                },
+                "bite": {
+                    "label": "Bite",
+                    "image": "./images/colorless/Bite.png"
+                },
+                "blind": {
+                    "label": "Blind",
+                    "image": "./images/colorless/Blind.png"
+                },
+                "chrysalis": {
+                    "label": "Chrysalis",
+                    "image": "./images/colorless/Chrysalis.png"
+                },
+                "darkshackles": {
+                    "label": "Dark Shackles",
+                    "image": "./images/colorless/DarkShackles.png"
+                },
+                "deepbreath": {
+                    "label": "Deep Breath",
+                    "image": "./images/colorless/DeepBreath.png"
+                },
+                "discovery": {
+                    "label": "Discovery",
+                    "image": "./images/colorless/Discovery.png"
+                },
+                "dramaticentrance": {
+                    "label": "Dramatic Entrance",
+                    "image": "./images/colorless/DramaticEntrance.png"
+                },
+                "enlightenment": {
+                    "label": "Enlightenment",
+                    "image": "./images/colorless/Enlightenment.png"
+                },
+                "expunger": {
+                    "label": "Expunger",
+                    "image": "./images/colorless/Expunger.png"
+                },
+                "finesse": {
+                    "label": "Finesse",
+                    "image": "./images/colorless/Finesse.png"
+                },
+                "flashofsteel": {
+                    "label": "Flashof Steel",
+                    "image": "./images/colorless/FlashofSteel.png"
+                },
+                "forethought": {
+                    "label": "Forethought",
+                    "image": "./images/colorless/Forethought.png"
+                },
+                "goodinstincts": {
+                    "label": "Good Instincts",
+                    "image": "./images/colorless/GoodInstincts.png"
+                },
+                "handofgreed": {
+                    "label": "Hand Of Greed",
+                    "image": "./images/colorless/HandOfGreed.png"
+                },
+                "impatience": {
+                    "label": "Impatience",
+                    "image": "./images/colorless/Impatience.png"
+                },
+                "insight": {
+                    "label": "Insight",
+                    "image": "./images/colorless/Insight.png"
+                },
+                "j.a.x.": {
+                    "label": "J.A.X.",
+                    "image": "./images/colorless/J.A.X..png"
+                },
+                "jackofalltrades": {
+                    "label": "Jack Of All Trades",
+                    "image": "./images/colorless/JackOfAllTrades.png"
+                },
+                "madness": {
+                    "label": "Madness",
+                    "image": "./images/colorless/Madness.png"
+                },
+                "magnetism": {
+                    "label": "Magnetism",
+                    "image": "./images/colorless/Magnetism.png"
+                },
+                "masterofstrategy": {
+                    "label": "Master Of Strategy",
+                    "image": "./images/colorless/MasterOfStrategy.png"
+                },
+                "mayhem": {
+                    "label": "Mayhem",
+                    "image": "./images/colorless/Mayhem.png"
+                },
+                "metamorphosis": {
+                    "label": "Metamorphosis",
+                    "image": "./images/colorless/Metamorphosis.png"
+                },
+                "mindblast": {
+                    "label": "Mind Blast",
+                    "image": "./images/colorless/MindBlast.png"
+                },
+                "miracle": {
+                    "label": "Miracle",
+                    "image": "./images/colorless/Miracle.png"
+                },
+                "omega": {
+                    "label": "Omega",
+                    "image": "./images/colorless/Omega.png"
+                },
+                "panacea": {
+                    "label": "Panacea",
+                    "image": "./images/colorless/Panacea.png"
+                },
+                "panache": {
+                    "label": "Panache",
+                    "image": "./images/colorless/Panache.png"
+                },
+                "panicbutton": {
+                    "label": "Panic Button",
+                    "image": "./images/colorless/PanicButton.png"
+                },
+                "purity": {
+                    "label": "Purity",
+                    "image": "./images/colorless/Purity.png"
+                },
+                "ritualdagger": {
+                    "label": "Ritual Dagger",
+                    "image": "./images/colorless/RitualDagger.png"
+                },
+                "sadisticnature": {
+                    "label": "Sadistic Nature",
+                    "image": "./images/colorless/SadisticNature.png"
+                },
+                "safety": {
+                    "label": "Safety",
+                    "image": "./images/colorless/Safety.png"
+                },
+                "secrettechnique": {
+                    "label": "Secret Technique",
+                    "image": "./images/colorless/SecretTechnique.png"
+                },
+                "secretweapon": {
+                    "label": "Secret Weapon",
+                    "image": "./images/colorless/SecretWeapon.png"
+                },
+                "shiv": {
+                    "label": "Shiv",
+                    "image": "./images/colorless/Shiv.png"
+                },
+                "smite": {
+                    "label": "Smite",
+                    "image": "./images/colorless/Smite.png"
+                },
+                "swiftstrike": {
+                    "label": "Swift Strike",
+                    "image": "./images/colorless/SwiftStrike.png"
+                },
+                "thebomb": {
+                    "label": "The Bomb",
+                    "image": "./images/colorless/TheBomb.png"
+                },
+                "thinkingahead": {
+                    "label": "Thinking Ahead",
+                    "image": "./images/colorless/ThinkingAhead.png"
+                },
+                "throughviolence": {
+                    "label": "Through Violence",
+                    "image": "./images/colorless/ThroughViolence.png"
+                },
+                "transmutation": {
+                    "label": "Transmutation",
+                    "image": "./images/colorless/Transmutation.png"
+                },
+                "trip": {
+                    "label": "Trip",
+                    "image": "./images/colorless/Trip.png"
+                },
+                "violence": {
+                    "label": "Violence",
+                    "image": "./images/colorless/Violence.png"
+                }
+            }
+        </script>
+        <script type="text/json" id="relic-pool">
+            {
+                "akabeko": {
+                    "label": "Akabeko",
+                    "image": "./images/relics/Akabeko.png"
+                },
+                "anchor": {
+                    "label": "Anchor",
+                    "image": "./images/relics/Anchor.png"
+                },
+                "ancientteaset": {
+                    "label": "Ancient Tea Set",
+                    "image": "./images/relics/AncientTeaSet.png"
+                },
+                "artofwar": {
+                    "label": "Artof War",
+                    "image": "./images/relics/ArtofWar.png"
+                },
+                "astrolabe": {
+                    "label": "Astrolabe",
+                    "image": "./images/relics/Astrolabe.png"
+                },
+                "bagofmarbles": {
+                    "label": "Bagof Marbles",
+                    "image": "./images/relics/BagofMarbles.png"
+                },
+                "bagofpreparation": {
+                    "label": "Bagof Preparation",
+                    "image": "./images/relics/BagofPreparation.png"
+                },
+                "birdfacedurn": {
+                    "label": "Bird Faced Urn",
+                    "image": "./images/relics/BirdFacedUrn.png"
+                },
+                "blackstar": {
+                    "label": "Black Star",
+                    "image": "./images/relics/BlackStar.png"
+                },
+                "bloodvial": {
+                    "label": "Blood Vial",
+                    "image": "./images/relics/BloodVial.png"
+                },
+                "bloodyidol": {
+                    "label": "Bloody Idol",
+                    "image": "./images/relics/BloodyIdol.png"
+                },
+                "bluecandle": {
+                    "label": "Blue Candle",
+                    "image": "./images/relics/BlueCandle.png"
+                },
+                "boot": {
+                    "label": "Boot",
+                    "image": "./images/relics/Boot.png"
+                },
+                "bottledflame": {
+                    "label": "Bottled Flame",
+                    "image": "./images/relics/BottledFlame.png"
+                },
+                "bottledlightning": {
+                    "label": "Bottled Lightning",
+                    "image": "./images/relics/BottledLightning.png"
+                },
+                "bottledtornado": {
+                    "label": "Bottled Tornado",
+                    "image": "./images/relics/BottledTornado.png"
+                },
+                "brimstone": {
+                    "label": "Brimstone",
+                    "image": "./images/relics/Brimstone.png"
+                },
+                "bronzescales": {
+                    "label": "Bronze Scales",
+                    "image": "./images/relics/BronzeScales.png"
+                },
+                "burningblood": {
+                    "label": "Burning Blood",
+                    "image": "./images/relics/BurningBlood.png"
+                },
+                "bustedcrown": {
+                    "label": "Busted Crown",
+                    "image": "./images/relics/BustedCrown.png"
+                },
+                "calipers": {
+                    "label": "Calipers",
+                    "image": "./images/relics/Calipers.png"
+                },
+                "callingbell": {
+                    "label": "Calling Bell",
+                    "image": "./images/relics/CallingBell.png"
+                },
+                "captainheel": {
+                    "label": "Captainheel",
+                    "image": "./images/relics/Captain_wheel.png"
+                },
+                "cauldron": {
+                    "label": "Cauldron",
+                    "image": "./images/relics/Cauldron.png"
+                },
+                "centennialpuzzle": {
+                    "label": "Centennial Puzzle",
+                    "image": "./images/relics/CentennialPuzzle.png"
+                },
+                "ceramicfish": {
+                    "label": "Ceramic Fish",
+                    "image": "./images/relics/CeramicFish.png"
+                },
+                "chemicalx": {
+                    "label": "Chemical X",
+                    "image": "./images/relics/ChemicalX.png"
+                },
+                "circlet": {
+                    "label": "Circlet",
+                    "image": "./images/relics/Circlet.png"
+                },
+                "clockworksouvenir": {
+                    "label": "Clockwork Souvenir",
+                    "image": "./images/relics/ClockworkSouvenir.png"
+                },
+                "coffeedripper": {
+                    "label": "Coffee Dripper",
+                    "image": "./images/relics/CoffeeDripper.png"
+                },
+                "crackedcore": {
+                    "label": "Cracked Core",
+                    "image": "./images/relics/CrackedCore.png"
+                },
+                "cultistmask": {
+                    "label": "Cultist Mask",
+                    "image": "./images/relics/CultistMask.png"
+                },
+                "cursedkey": {
+                    "label": "Cursed Key",
+                    "image": "./images/relics/CursedKey.png"
+                },
+                "damaru": {
+                    "label": "Damaru",
+                    "image": "./images/relics/Damaru.png"
+                },
+                "darkstoneperiapt": {
+                    "label": "Darkstone Periapt",
+                    "image": "./images/relics/DarkstonePeriapt.png"
+                },
+                "datadisk": {
+                    "label": "Data Disk",
+                    "image": "./images/relics/DataDisk.png"
+                },
+                "deadbranch": {
+                    "label": "Dead Branch",
+                    "image": "./images/relics/DeadBranch.png"
+                },
+                "dollysmirror": {
+                    "label": "Dollys Mirror",
+                    "image": "./images/relics/DollysMirror.png"
+                },
+                "dreamcatcher": {
+                    "label": "Dream Catcher",
+                    "image": "./images/relics/DreamCatcher.png"
+                },
+                "du-vudoll": {
+                    "label": "Du -Vu Doll",
+                    "image": "./images/relics/Du-VuDoll.png"
+                },
+                "ectoplasm": {
+                    "label": "Ectoplasm",
+                    "image": "./images/relics/Ectoplasm.png"
+                },
+                "emotionchip": {
+                    "label": "Emotion Chip",
+                    "image": "./images/relics/EmotionChip.png"
+                },
+                "emptycage": {
+                    "label": "Empty Cage",
+                    "image": "./images/relics/EmptyCage.png"
+                },
+                "enchiridion": {
+                    "label": "Enchiridion",
+                    "image": "./images/relics/Enchiridion.png"
+                },
+                "eternalfeather": {
+                    "label": "Eternal Feather",
+                    "image": "./images/relics/EternalFeather.png"
+                },
+                "faceofcleric": {
+                    "label": "Face Of Cleric",
+                    "image": "./images/relics/FaceOfCleric.png"
+                },
+                "fossilizedhelix": {
+                    "label": "Fossilized Helix",
+                    "image": "./images/relics/FossilizedHelix.png"
+                },
+                "frost": {
+                    "label": "Frost",
+                    "image": "./images/relics/Frost.png"
+                },
+                "frozenegg2": {
+                    "label": "Frozen Egg 2",
+                    "image": "./images/relics/FrozenEgg2.png"
+                },
+                "frozeneye": {
+                    "label": "Frozen Eye",
+                    "image": "./images/relics/FrozenEye.png"
+                },
+                "fusionhammer": {
+                    "label": "Fusion Hammer",
+                    "image": "./images/relics/FusionHammer.png"
+                },
+                "gamblingchip": {
+                    "label": "Gambling Chip",
+                    "image": "./images/relics/GamblingChip.png"
+                },
+                "ginger": {
+                    "label": "Ginger",
+                    "image": "./images/relics/Ginger.png"
+                },
+                "girya": {
+                    "label": "Girya",
+                    "image": "./images/relics/Girya.png"
+                },
+                "goldenidol": {
+                    "label": "Golden Idol",
+                    "image": "./images/relics/GoldenIdol.png"
+                },
+                "goldenye": {
+                    "label": "Goldenye",
+                    "image": "./images/relics/Golden_eye.png"
+                },
+                "gremlinhorn": {
+                    "label": "Gremlin Horn",
+                    "image": "./images/relics/GremlinHorn.png"
+                },
+                "gremlinmask": {
+                    "label": "Gremlin Mask",
+                    "image": "./images/relics/GremlinMask.png"
+                },
+                "handdrill": {
+                    "label": "Hand Drill",
+                    "image": "./images/relics/HandDrill.png"
+                },
+                "happyflower": {
+                    "label": "Happy Flower",
+                    "image": "./images/relics/HappyFlower.png"
+                },
+                "hornleat": {
+                    "label": "Hornleat",
+                    "image": "./images/relics/Horn_cleat.png"
+                },
+                "hoveringkite": {
+                    "label": "Hovering Kite",
+                    "image": "./images/relics/HoveringKite.png"
+                },
+                "icecream": {
+                    "label": "Ice Cream",
+                    "image": "./images/relics/IceCream.png"
+                },
+                "incenseburner": {
+                    "label": "Incense Burner",
+                    "image": "./images/relics/IncenseBurner.png"
+                },
+                "inkbottle": {
+                    "label": "Ink Bottle",
+                    "image": "./images/relics/InkBottle.png"
+                },
+                "juzubracelet": {
+                    "label": "Juzu Bracelet",
+                    "image": "./images/relics/JuzuBracelet.png"
+                },
+                "kunai": {
+                    "label": "Kunai",
+                    "image": "./images/relics/Kunai.png"
+                },
+                "lantern": {
+                    "label": "Lantern",
+                    "image": "./images/relics/Lantern.png"
+                },
+                "leeswaffle": {
+                    "label": "Lees Waffle",
+                    "image": "./images/relics/LeesWaffle.png"
+                },
+                "letteropener": {
+                    "label": "Letter Opener",
+                    "image": "./images/relics/LetterOpener.png"
+                },
+                "lizardtail": {
+                    "label": "Lizard Tail",
+                    "image": "./images/relics/LizardTail.png"
+                },
+                "magicflower": {
+                    "label": "Magic Flower",
+                    "image": "./images/relics/MagicFlower.png"
+                },
+                "mango": {
+                    "label": "Mango",
+                    "image": "./images/relics/Mango.png"
+                },
+                "markofthebloom": {
+                    "label": "Markofthe Bloom",
+                    "image": "./images/relics/MarkoftheBloom.png"
+                },
+                "matryoshka": {
+                    "label": "Matryoshka",
+                    "image": "./images/relics/Matryoshka.png"
+                },
+                "mawbank": {
+                    "label": "Maw Bank",
+                    "image": "./images/relics/MawBank.png"
+                },
+                "mealticket": {
+                    "label": "Meal Ticket",
+                    "image": "./images/relics/MealTicket.png"
+                },
+                "meatonthebone": {
+                    "label": "Meatonthe Bone",
+                    "image": "./images/relics/MeatontheBone.png"
+                },
+                "medicalkit": {
+                    "label": "Medical Kit",
+                    "image": "./images/relics/MedicalKit.png"
+                },
+                "melange": {
+                    "label": "Melange",
+                    "image": "./images/relics/Melange.png"
+                },
+                "membershipcard": {
+                    "label": "Membership Card",
+                    "image": "./images/relics/MembershipCard.png"
+                },
+                "mercuryhourglass": {
+                    "label": "Mercury Hourglass",
+                    "image": "./images/relics/MercuryHourglass.png"
+                },
+                "moltenegg2": {
+                    "label": "Molten Egg 2",
+                    "image": "./images/relics/MoltenEgg2.png"
+                },
+                "mummifiedhand": {
+                    "label": "Mummified Hand",
+                    "image": "./images/relics/MummifiedHand.png"
+                },
+                "mutagenicstrength": {
+                    "label": "Mutagenic Strength",
+                    "image": "./images/relics/MutagenicStrength.png"
+                },
+                "necronomicon": {
+                    "label": "Necronomicon",
+                    "image": "./images/relics/Necronomicon.png"
+                },
+                "neowsblessing": {
+                    "label": "Neows Blessing",
+                    "image": "./images/relics/NeowsBlessing.png"
+                },
+                "nilryscodex": {
+                    "label": "Nilrys Codex",
+                    "image": "./images/relics/NilrysCodex.png"
+                },
+                "nlothsgift": {
+                    "label": "Nloths Gift",
+                    "image": "./images/relics/NlothsGift.png"
+                },
+                "nlothsmask": {
+                    "label": "Nloths Mask",
+                    "image": "./images/relics/NlothsMask.png"
+                },
+                "nuclearbattery": {
+                    "label": "Nuclear Battery",
+                    "image": "./images/relics/NuclearBattery.png"
+                },
+                "nunchaku": {
+                    "label": "Nunchaku",
+                    "image": "./images/relics/Nunchaku.png"
+                },
+                "oddmushroom": {
+                    "label": "Odd Mushroom",
+                    "image": "./images/relics/OddMushroom.png"
+                },
+                "oddlysmoothstone": {
+                    "label": "Oddly Smooth Stone",
+                    "image": "./images/relics/OddlySmoothStone.png"
+                },
+                "oldcoin": {
+                    "label": "Old Coin",
+                    "image": "./images/relics/OldCoin.png"
+                },
+                "omamori": {
+                    "label": "Omamori",
+                    "image": "./images/relics/Omamori.png"
+                },
+                "orangepellets": {
+                    "label": "Orange Pellets",
+                    "image": "./images/relics/OrangePellets.png"
+                },
+                "orichalcum": {
+                    "label": "Orichalcum",
+                    "image": "./images/relics/Orichalcum.png"
+                },
+                "ornamentalfan": {
+                    "label": "Ornamental Fan",
+                    "image": "./images/relics/OrnamentalFan.png"
+                },
+                "orrery": {
+                    "label": "Orrery",
+                    "image": "./images/relics/Orrery.png"
+                },
+                "pandorasbox": {
+                    "label": "Pandoras Box",
+                    "image": "./images/relics/PandorasBox.png"
+                },
+                "pantograph": {
+                    "label": "Pantograph",
+                    "image": "./images/relics/Pantograph.png"
+                },
+                "papercrane": {
+                    "label": "Paper Crane",
+                    "image": "./images/relics/PaperCrane.png"
+                },
+                "peacepipe": {
+                    "label": "Peace Pipe",
+                    "image": "./images/relics/PeacePipe.png"
+                },
+                "pear": {
+                    "label": "Pear",
+                    "image": "./images/relics/Pear.png"
+                },
+                "pennib": {
+                    "label": "Pen Nib",
+                    "image": "./images/relics/PenNib.png"
+                },
+                "philosophersstone": {
+                    "label": "Philosophers Stone",
+                    "image": "./images/relics/PhilosophersStone.png"
+                },
+                "pocketwatch": {
+                    "label": "Pocketwatch",
+                    "image": "./images/relics/Pocketwatch.png"
+                },
+                "potionbelt": {
+                    "label": "Potion Belt",
+                    "image": "./images/relics/PotionBelt.png"
+                },
+                "prayerwheel": {
+                    "label": "Prayer Wheel",
+                    "image": "./images/relics/PrayerWheel.png"
+                },
+                "preservedinsect": {
+                    "label": "Preserved Insect",
+                    "image": "./images/relics/PreservedInsect.png"
+                },
+                "prismaticshard": {
+                    "label": "Prismatic Shard",
+                    "image": "./images/relics/PrismaticShard.png"
+                },
+                "purewater-0": {
+                    "label": "Pure Water -0",
+                    "image": "./images/relics/PureWater-0.png"
+                },
+                "questioncard": {
+                    "label": "Question Card",
+                    "image": "./images/relics/QuestionCard.png"
+                },
+                "redmask": {
+                    "label": "Red Mask",
+                    "image": "./images/relics/RedMask.png"
+                },
+                "redskull": {
+                    "label": "Red Skull",
+                    "image": "./images/relics/RedSkull.png"
+                },
+                "regalpillow": {
+                    "label": "Regal Pillow",
+                    "image": "./images/relics/RegalPillow.png"
+                },
+                "ringofthesnake": {
+                    "label": "Ringofthe Snake",
+                    "image": "./images/relics/RingoftheSnake.png"
+                },
+                "runiccapacitor": {
+                    "label": "Runic Capacitor",
+                    "image": "./images/relics/RunicCapacitor.png"
+                },
+                "runiccube": {
+                    "label": "Runic Cube",
+                    "image": "./images/relics/RunicCube.png"
+                },
+                "runicdome": {
+                    "label": "Runic Dome",
+                    "image": "./images/relics/RunicDome.png"
+                },
+                "runicpyramid": {
+                    "label": "Runic Pyramid",
+                    "image": "./images/relics/RunicPyramid.png"
+                },
+                "sacredbark": {
+                    "label": "Sacred Bark",
+                    "image": "./images/relics/SacredBark.png"
+                },
+                "selfformingclay": {
+                    "label": "Self Forming Clay",
+                    "image": "./images/relics/SelfFormingClay.png"
+                },
+                "shovel": {
+                    "label": "Shovel",
+                    "image": "./images/relics/Shovel.png"
+                },
+                "shuriken": {
+                    "label": "Shuriken",
+                    "image": "./images/relics/Shuriken.png"
+                },
+                "singingbowl": {
+                    "label": "Singing Bowl",
+                    "image": "./images/relics/SingingBowl.png"
+                },
+                "slaverscollar": {
+                    "label": "Slavers Collar",
+                    "image": "./images/relics/SlaversCollar.png"
+                },
+                "sling": {
+                    "label": "Sling",
+                    "image": "./images/relics/Sling.png"
+                },
+                "smilingmask": {
+                    "label": "Smiling Mask",
+                    "image": "./images/relics/SmilingMask.png"
+                },
+                "snakeskull": {
+                    "label": "Snake Skull",
+                    "image": "./images/relics/SnakeSkull.png"
+                },
+                "sneckoeye": {
+                    "label": "Snecko Eye",
+                    "image": "./images/relics/SneckoEye.png"
+                },
+                "sozu": {
+                    "label": "Sozu",
+                    "image": "./images/relics/Sozu.png"
+                },
+                "spiritpoop": {
+                    "label": "Spirit Poop",
+                    "image": "./images/relics/SpiritPoop.png"
+                },
+                "ssserpenthead": {
+                    "label": "Ssserpent Head",
+                    "image": "./images/relics/SsserpentHead.png"
+                },
+                "stonecalendar": {
+                    "label": "Stone Calendar",
+                    "image": "./images/relics/StoneCalendar.png"
+                },
+                "strangespoon": {
+                    "label": "Strange Spoon",
+                    "image": "./images/relics/StrangeSpoon.png"
+                },
+                "strawberry": {
+                    "label": "Strawberry",
+                    "image": "./images/relics/Strawberry.png"
+                },
+                "strikedummy": {
+                    "label": "Strike Dummy",
+                    "image": "./images/relics/StrikeDummy.png"
+                },
+                "sundial": {
+                    "label": "Sundial",
+                    "image": "./images/relics/Sundial.png"
+                },
+                "symbioticvirus": {
+                    "label": "Symbiotic Virus",
+                    "image": "./images/relics/SymbioticVirus.png"
+                },
+                "tearropocket": {
+                    "label": "Tearropocket",
+                    "image": "./images/relics/Tear_drop_locket.png"
+                },
+                "theabacus": {
+                    "label": "The Abacus",
+                    "image": "./images/relics/TheAbacus.png"
+                },
+                "thecourier": {
+                    "label": "The Courier",
+                    "image": "./images/relics/TheCourier.png"
+                },
+                "threadandneedle": {
+                    "label": "Threadand Needle",
+                    "image": "./images/relics/ThreadandNeedle.png"
+                },
+                "tinychest": {
+                    "label": "Tiny Chest",
+                    "image": "./images/relics/TinyChest.png"
+                },
+                "tinyhouse": {
+                    "label": "Tiny House",
+                    "image": "./images/relics/TinyHouse.png"
+                },
+                "toolbox": {
+                    "label": "Toolbox",
+                    "image": "./images/relics/Toolbox.png"
+                },
+                "torii": {
+                    "label": "Torii",
+                    "image": "./images/relics/Torii.png"
+                },
+                "toughbandages": {
+                    "label": "Tough Bandages",
+                    "image": "./images/relics/ToughBandages.png"
+                },
+                "toxicegg2": {
+                    "label": "Toxic Egg 2",
+                    "image": "./images/relics/ToxicEgg2.png"
+                },
+                "toyornithopter": {
+                    "label": "Toy Ornithopter",
+                    "image": "./images/relics/ToyOrnithopter.png"
+                },
+                "tungstenrod": {
+                    "label": "Tungsten Rod",
+                    "image": "./images/relics/TungstenRod.png"
+                },
+                "turnip": {
+                    "label": "Turnip",
+                    "image": "./images/relics/Turnip.png"
+                },
+                "twistedfunnel": {
+                    "label": "Twisted Funnel",
+                    "image": "./images/relics/TwistedFunnel.png"
+                },
+                "unceasingtop": {
+                    "label": "Unceasing Top",
+                    "image": "./images/relics/UnceasingTop.png"
+                },
+                "vajra": {
+                    "label": "Vajra",
+                    "image": "./images/relics/Vajra.png"
+                },
+                "velvetchoker": {
+                    "label": "Velvet Choker",
+                    "image": "./images/relics/VelvetChoker.png"
+                },
+                "violetotus": {
+                    "label": "Violetotus",
+                    "image": "./images/relics/Violet_lotus.png"
+                },
+                "warpaint": {
+                    "label": "War Paint",
+                    "image": "./images/relics/WarPaint.png"
+                },
+                "warpedtongs": {
+                    "label": "Warped Tongs",
+                    "image": "./images/relics/WarpedTongs.png"
+                },
+                "whetstone": {
+                    "label": "Whetstone",
+                    "image": "./images/relics/Whetstone.png"
+                },
+                "whitebeaststatue": {
+                    "label": "White Beast Statue",
+                    "image": "./images/relics/WhiteBeastStatue.png"
+                },
+                "wingedgreaves": {
+                    "label": "Winged Greaves",
+                    "image": "./images/relics/WingedGreaves.png"
+                }
+            }
+        </script>
+        <script type="text/json" id="hero-pool">
+            {
+                "ironclad": {
+                    "label": "Ironclad",
+                    "cardPoolKey": "ironclad-cards",
+                    "image": "./images/ironclad.webp"
+                },
+                "silent": {
+                     "label": "Silent",
+                     "cardPoolKey": "silent-cards",
+                     "image": "./images/silent.webp"
+                },
+                "defect": {
+                    "label": "Defect",
+                    "cardPoolKey": "defect-cards",
+                    "image": "./images/defect.webp"
+                },
+                "watcher": {
+                    "label": "Watcher",
+                    "cardPoolKey": "watcher-cards",
+                    "image": "./images/watcher.webp"
+                }
+            } 
+        </script>
+
+        <script type="text/babel">
+            //@flow
+            const {useState, useRef, useEffect, useMemo} = React;
+            const useId = () => {
+                return useRef(crypto.randomUUID()).current;
+            }
+
+            function HeroSelector({onHeroChange, hero}) {
+                const heroPool = getHeroPool();
+                const availableHeroes = Object.keys(heroPool);
+
+                return (
+                    <select 
+                        onChange={(event) => onHeroChange(event.target.value)} 
+                        value={hero}
+                    >
+                        {availableHeroes.map(key => 
+                            <option 
+                                value={key} 
+                                key={key}
+                            >
+                                {heroPool[key].label}
+                            </option>
+                        )}
+                    </select>
+                );
+            }
+
+            function getBaalorlordFacePool() {
+                return JSON.parse(
+                    document.getElementById('baalorlord-faces').innerText
+                );
+            }
+
+            function Selector({onChange, options, selectedOption}) {
+                const defaultOption = Object.keys(options).shift();
+
+                return (
+                    <select 
+                        onChange={(event) => onChange(event.target.value)} 
+                        value={selectedOption}
+                    >
+                        {Object.keys(options).map(key => 
+                            <option 
+                                value={key} 
+                                key={key}
+                            >
+                                {options[key].label}
+                            </option>
+                        )}
+                    </select>
+                );
+            }
+
+            function ElementRadio({
+                group, 
+                children, 
+                value, 
+                onChange, 
+                checked
+            }) {
+                const id = useId();
+
+                return (
+                    <div style={{display:'inline-block'}}>
+                        <input 
+                            type="radio" 
+                            name={group} 
+                            id={id} 
+                            value={value} 
+                            onChange={onChange} 
+                            checked={checked}
+                        />
+                        <label htmlFor={id}>{children}</label>
+                    </div>
+                );
+            }
+
+            function ElementSelector({
+                selectedElement, 
+                onElementChange, 
+                activeHeroCardPool, 
+                onElementRemove
+            }) {
+                const relicPool = getRelicPool();
+                const colorlessCardPool = getColorlessCardPool();
+
+                const defaultRelic = Object.keys(relicPool).shift();
+                const defaultColorlessCard = Object.keys(colorlessCardPool).shift();
+                const defaultHeroCard = Object.keys(activeHeroCardPool).shift();
+
+                const defaultElements = {
+                    'hero-card': {
+                        type: 'hero-card',
+                        key: defaultHeroCard,
+                        item: activeHeroCardPool[defaultHeroCard]
+                    },
+                    'relic': {
+                        type: 'relic',
+                        key: defaultRelic,
+                        item: relicPool[defaultRelic]
+                    },
+                    'colorless-card': {
+                        type: 'colorless-card',
+                        key: defaultColorlessCard,
+                        item: colorlessCardPool[defaultColorlessCard]
+                    },
+                };
+
+                const id = useId();
+
+                const onElementTypeChange = (e) => onElementChange(defaultElements[e.target.value]);
+
+                let elementTitle = null;
+                let elementSelector = null;
+                switch (selectedElement.type) {
+                    case 'hero-card':
+                        elementTitle = 'Card:';
+                        elementSelector = 
+                            <Selector 
+                                options={activeHeroCardPool} 
+                                selectedOption={selectedElement.key}
+                                onChange={key => onElementChange({
+                                    type: selectedElement.type, 
+                                    key, 
+                                    item: activeHeroCardPool[key]
+                                })} 
+                            />;
+                        break;
+                    case 'relic':
+                        elementTitle = 'Relic:';
+                        elementSelector =   
+                            <Selector
+                                options={relicPool}
+                                selectedOption={selectedElement.key}
+                                onChange={key => onElementChange({
+                                    type: selectedElement.type, 
+                                    key, 
+                                    item: relicPool[key]
+                                })}
+                            />
+                        break;
+                    case 'colorless-card':
+                        elementTitle = 'Card:';
+                        elementSelector = 
+                            <Selector 
+                                options={colorlessCardPool} 
+                                selectedOption={selectedElement.key}
+                                onChange={key => onElementChange({type: selectedElement.type, key, item: colorlessCardPool[key]})} 
+                            />;
+                        break;
+                    default:
+                        elementSelector = null;
+                        elementTitle = null;
+                }
+
+                return (
+                    <div>
+                        Type:
+                        <ElementRadio 
+                            group={id} 
+                            value="hero-card" 
+                            onChange={onElementTypeChange} 
+                            checked={selectedElement.type === 'hero-card'}
+                        >
+                            Hero Card
+                        </ElementRadio>
+                        <ElementRadio 
+                            group={id} 
+                            value="colorless-card" 
+                            onChange={onElementTypeChange} 
+                            checked={selectedElement.type === 'colorless-card'}
+                        >
+                            Colorless Card
+                        </ElementRadio>
+                        <ElementRadio 
+                            group={id} 
+                            value="relic" 
+                            onChange={onElementTypeChange} 
+                            checked={selectedElement.type === 'relic'}
+                        >
+                            Relic
+                        </ElementRadio>
+                        <div>
+                            {elementTitle} {elementSelector}
+                        </div>
+                        <input type="button" onClick={onElementRemove} value="-"/>
+                    </div>
+                );
+            }
+
+            function loadImage(url) {
+                return new Promise((resolve, reject) => {
+                    const image = new Image();
+                    image.addEventListener('load', () => resolve(image))
+                    image.addEventListener('error', (event) => {
+                        reject(event.error)
+                    })
+                    image.src = url;
+                });
+            }
+
+            function useImages(urls) {
+                const [state, setState] = useState([]);
+
+                useEffect(() => {
+                    const promises = urls.map(
+                        url => 
+                            url ? 
+                                loadImage(url).catch(() => null) : 
+                                Promise.resolve(null)
+                    );
+                    Promise.all(promises).then(setState)
+                }, [JSON.stringify(urls)]);
+
+                return state;
+            }
+
+            function ThumbnailRenderer({
+                face, 
+                hero, 
+                line1, 
+                line2, 
+                elements,
+                extraRelic
+            }) {
+                const canvasRef = useRef(null);
+                const elementsClone = elements.slice();
+                
+                const [ 
+                    relicBackdropImage,
+                    faceImage, 
+                    heroImage, 
+                    extraRelicImage, 
+                    ...elementsImages 
+                ] = useImages([ 
+                    getRelicBackdrop(), 
+                    face, 
+                    hero, 
+                    extraRelic, 
+                    ...(elementsClone.map(e => e.item)) 
+                ].map(v => v?.image));
+
+                useEffect(() => {
+                    const canvas = canvasRef.current;
+                    const context = canvas.getContext('2d');
+                    context.clearRect(
+                        0,
+                        0, 
+                        context.canvas.width, 
+                        context.canvas.height
+                    );
+
+                    if (heroImage) {
+                        context.save();
+                        context.filter = 'saturate(120%) blur(25px)';
+                        context.drawImage(
+                            heroImage,
+                            0, 
+                            0, 
+                            context.canvas.width, context.canvas.height
+                        );
+                        context.restore();
+                    }
+
+                    if (elementsImages.length === 1 && elementsClone.length === 1) {
+                        // Repeat single elements
+                        const repeatCount = 8;
+                        for(let i = 0; i < repeatCount; i++) {
+                            elementsClone.push(elementsClone[0]);
+                            elementsImages.push(elementsImages[0]);
+                        }
+                    }
+
+                    context.save();
+                    context.filter = 'brightness(120%) saturate(160%) contrast(120%)';
+
+                    function enableDropShadow() {
+                        context.shadowOffsetX = 10;
+                        context.shadowOffsetY = 10;
+                        context.shadowColor = 'black';
+                        context.shadowBlur = 50;
+                    }
+
+                    function withLocalContext(context, f) {
+                        context.save();
+                        try {
+                            f(context);
+                        } finally {
+                            context.restore();
+                        }
+                    }
+                    
+                    const elementsCount = elementsImages.length;
+                    const cardScale = elementsCount > 2 ? 1.1 : 1.2;
+                    const approximateCardWidth = 678 * cardScale;
+                    const relicFrameScale = 3.5;
+                    const approximateRelicWidth = 160 * relicFrameScale;
+                    const additionalRelicPadding = (approximateCardWidth - approximateRelicWidth)/2 - 80;
+                    const additionalCardPadding = -40;
+                    // Give elements a little more space if there are more than 2
+                    const availableElementsWidth = (elementsCount > 2 ? 1600 : 1500);
+                    let availableTextSpace = availableElementsWidth;
+
+                    const line1Size = context.measureText(line1);
+                    const line2Size = context.measureText(line2);
+
+                    const availableHeight = 640;
+                    const widthAvailablePerElement = (availableElementsWidth - (elementsClone[0].type === 'relic' ? approximateRelicWidth + additionalRelicPadding : approximateCardWidth + additionalCardPadding)) / (elementsCount - 1);
+                    let nextCenterX = availableElementsWidth - (approximateCardWidth / 2);
+
+                    // Shrink cards a little when there are more than 2 elements
+                    const cardTopOffset = -30;
+                    const firstCenterX = nextCenterX;
+                    
+                    const faceCardCoverTolerance = approximateCardWidth * 1/2;
+
+                    function drawRelicCentered(context, relicImage) {
+                        const relicFrameY = - (relicImage.height) / 2;
+                        const relicFrameX = - (relicImage.width) / 2;
+                        
+                        drawRelic(context, relicImage, relicFrameX, relicFrameY);
+                    }
+
+                    function drawRelic(context, relicImage, x = 0, y = 0) {
+                        const relicScale = 0.9;
+
+                        const relicX = relicImage.width / 2;
+                        const relicY = relicImage.height / 2;
+                        
+                        context.scale(relicFrameScale, relicFrameScale);
+                        
+                        withLocalContext(context, (context) => {
+                            enableDropShadow();
+                            context.translate(x, y);
+                            context.drawImage(
+                                relicBackdropImage,
+                                0,
+                                0,
+                                relicImage.width,
+                                relicImage.height
+                            );
+                        });
+
+                        context.translate(relicX / 2, relicY / 2);
+                        context.scale(relicScale, relicScale);
+                        context.translate(x, y);
+                        context.drawImage(relicImage, -relicX / 2, -relicY / 2);
+                    }
+
+                    for (let i = elementsImages.length - 1; i > -1; i--) {
+                        switch (elementsClone[i].type) {
+                            case 'colorless-card':
+                            case 'hero-card':
+                                withLocalContext(context, (context) => {
+                                    enableDropShadow();
+                                    
+                                    const cardX = Math.min(
+                                        Math.max( 
+                                            nextCenterX - (elementsImages[i].width * cardScale / 2),
+                                            -40
+                                        ), 
+                                        availableElementsWidth - elementsImages[i].width * cardScale
+                                    );
+                                    context.translate(cardX, cardTopOffset);
+                                    context.scale(cardScale, cardScale);
+
+                                    context.drawImage(
+                                        elementsImages[i],
+                                        0, 
+                                        0
+                                    );
+                                });
+                                break;
+                            case 'relic':
+                                withLocalContext(context, (context) => {
+                                    context.translate(nextCenterX + 100, availableHeight / 2);
+                                    drawRelicCentered(context, elementsImages[i]);
+                                });
+                                break;
+                        }
+                        nextCenterX -= widthAvailablePerElement;
+                    }
+                    
+                    if (extraRelicImage && relicBackdropImage) {
+                        const relicX = availableTextSpace - approximateRelicWidth * 0.85;
+                        withLocalContext(context, (context) => {
+                            context.translate(relicX, 560);
+                            context.scale(0.9, 0.9)
+
+                            drawRelic(context, extraRelicImage);
+                        });
+                        availableTextSpace = Math.min(relicX + approximateRelicWidth * 0.15, availableTextSpace);
+                    }
+                    
+                    context.restore();
+
+                    if (faceImage) {
+                        const faceScale = 1080 / faceImage.height;
+                        const faceHeight = faceImage.height * faceScale;
+                        const faceWidth = faceImage.width * faceScale;
+                        const faceX = Math.max(
+                            // X value for full face image
+                            context.canvas.width - faceWidth, 
+                            // if elementsWidth overlaps with face, move face to right so at 
+                            // most 1/3 of face is covering elements.
+                            (firstCenterX) + approximateCardWidth/2 - faceCardCoverTolerance
+                        );
+                        availableTextSpace = Math.min(
+                            faceX + faceWidth/6,
+                            availableTextSpace
+                        );
+                        context.drawImage(
+                            faceImage,
+                            faceX, 
+                            context.canvas.height - faceHeight, 
+                            faceWidth, 
+                            faceHeight
+                        );
+                    }
+
+                    const fontSize = 320;
+                    context.font = `bold ${fontSize}px Merriweather-Heavy`;
+                    context.strokeStyle = 'black';
+                    context.lineWidth = 5;
+                    
+                    enableDropShadow();
+
+                    const maxWidth = Math.min(
+                        availableTextSpace,
+                        line1Size.width,
+                        line2Size.width
+                    );
+
+                    const line1X = Math.max(10, (availableTextSpace - maxWidth) / 2);
+                    const line1Y = 1080 / 2 + (fontSize * 5/6);
+
+                    const line2X = line1X;
+                    const line2Y = line1Y + line1Size.actualBoundingBoxAscent + 10;
+
+                    const goldGradient = context.createLinearGradient(
+                        0,
+                        line1Y-line1Size.actualBoundingBoxAscent,
+                        0, 
+                        line1Y
+                    );
+                    goldGradient.addColorStop(0, 'yellow');
+                    goldGradient.addColorStop(0.6, 'yellow');
+                    goldGradient.addColorStop(0.8, 'gold');
+                    goldGradient.addColorStop(0.9, 'gold');
+                    goldGradient.addColorStop(1, 'orange');
+
+                    const line2Gradient = context.createLinearGradient(
+                        0,
+                        line2Y-line2Size.actualBoundingBoxAscent,
+                        0, 
+                        line2Y
+                    );
+                    line2Gradient.addColorStop(0, 'white');
+                    line2Gradient.addColorStop(0.8, 'white');
+                    line2Gradient.addColorStop(0.95, 'gray');
+                    line2Gradient.addColorStop(1, 'black');
+                    
+                    
+                    context.fillStyle = goldGradient;
+                    // Doubling up to intensify the drop shadow effect
+                    context.fillText(line1, line1X, line1Y, maxWidth);
+                    context.strokeText(line1, line1X, line1Y, maxWidth);
+                    context.fillText(line1, line1X, line1Y, maxWidth);
+                    context.strokeText(line1, line1X, line1Y, maxWidth);
+
+                    context.fillStyle = line2Gradient;
+                    // Doubling up to intensify the drop shadow effect
+                    context.fillText(line2, line2X, line2Y, maxWidth);
+                    context.strokeText(line2, line2X, line2Y, maxWidth);
+                    context.fillText(line2, line2X, line2Y, maxWidth);
+                    context.strokeText(line2, line2X, line2Y, maxWidth);
+                    
+
+                }, [
+                    line1, 
+                    line2, 
+                    faceImage, 
+                    heroImage, 
+                    extraRelicImage, 
+                    relicBackdropImage, 
+                    JSON.stringify(elementsImages.map(img => img.src))
+                ]);
+
+                return (
+                    <canvas 
+                        style={{width:'100%',backgroundColor:'black'}} 
+                        width="1920" 
+                        height="1080" 
+                        ref={canvasRef} 
+                    />
+                );
+            }
+
+            function getHeroCardPool(heroKey) {
+                const heroPool = getHeroPool();
+                return getParsedElementText(heroPool[heroKey].cardPoolKey);
+            }
+
+            function getRelicPool() {
+                const relicPoolKey = 'relic-pool';
+                return getParsedElementText(relicPoolKey);
+
+            }
+            
+            function getColorlessCardPool() {
+                const colorlessCardPoolKey = 'colorless-cards';
+                return getParsedElementText(colorlessCardPoolKey);
+            }
+
+            const getParsedElementText = (() => {
+                const cache = new Map();
+
+                return (id) => {
+                    if (!cache.has(id)) {
+                        cache.set(id, JSON.parse(document.getElementById(id).innerText));
+                    }
+                    
+                    return cache.get(id);
+                };
+            })();
+
+            function getRelicBackdrop() {
+                return { image: './images/frame.jpeg' };
+            }
+
+            function getHeroPool() {
+                const heroPoolKey = 'hero-pool';
+                return getParsedElementText(heroPoolKey);
+            }
+
+            function BaalorlordThumbnailGenerator() {
+                const defaultHero = 'silent';
+                const defaultBaalorlord = 'baalorlord_hm';
+
+                const defaultElements = [{
+                    type: 'hero-card', 
+                    key: 'grandfinale', 
+                    item: getHeroCardPool(defaultHero)['grandfinale']
+                }, {
+                    type: 'hero-card', 
+                    key: 'nightmare', 
+                    item: getHeroCardPool(defaultHero)['nightmare']
+                }];
+
+                const [state, setState] = useState({
+                    hero: defaultHero,
+                    elements: defaultElements,
+                    line1: 'INSTANT',
+                    line2: 'VICTORY',
+                    baalorlord: 'baalorlord_woot',
+                    extraRelic: 'runicpyramid',
+                });
+                const {hero, elements, line1, line2, baalorlord, extraRelic} = state;
+
+                const heroPool = getHeroPool();
+                const heroCardPool = getHeroCardPool(hero);
+
+                return (
+                    <div>
+                        <span>Character: <HeroSelector 
+                            onHeroChange={hero => {
+                                setState({...state, hero, elements: elements.map((element) => {
+                                    if (element.type !== 'hero-card') {
+                                        return element;
+                                    }
+
+                                    return {
+                                        type: 'hero-card',
+                                        key: 'strike',
+                                        item: getHeroCardPool(hero)['strike']
+                                    };
+                                })});
+                            }}
+                            hero={hero} 
+                        /></span>
+                        <span style={{marginLeft: '10px'}}>Baalorlord's Face: <Selector
+                            onChange={baalorlord => setState({...state, baalorlord})}
+                            selectedOption={baalorlord}
+                            options={getBaalorlordFacePool()}
+                        /></span>
+                        <fieldset>
+                            <legend>Elements</legend>
+                            {elements.map((el, i) => 
+                                <fieldset key={i}>
+                                    <ElementSelector 
+                                        selectedElement={elements[i]}
+                                        activeHeroCardPool={heroCardPool} 
+                                        onElementRemove={() => setState({
+                                            ...state,
+                                            elements: [
+                                                ...elements.slice(0, i),
+                                                ...elements.slice(i+1, elements.length)
+                                            ]
+                                        })}
+                                        onElementChange={newElement => setState({
+                                            ...state, 
+                                            elements: [
+                                                ...elements.slice(0, i),
+                                                newElement,
+                                                ...elements.slice(i+1, elements.length)
+                                            ]
+                                        })}
+                                    />
+                                </fieldset>
+                            )}
+                            { elements.length < 3 ? <input type="button" value="+" onClick={() => setState({
+                                ...state,
+                                elements: [
+                                    ...elements.slice(),
+                                    {type: 'hero-card', key: 'strike', item: heroCardPool['strike']}
+                                ]
+                            })} /> : null }
+                            <div>
+                                <input 
+                                    type="checkbox" 
+                                    id="extra-relic-cb" 
+                                    alt="Adds an extra relic spot between text and face"  
+                                    checked={!!extraRelic}
+                                    onChange={(event) => {
+                                        setState({
+                                            ...state, 
+                                            extraRelic: event.target.checked ? 
+                                                'bagofpreparation' : 
+                                                null 
+                                        })
+                                    }} 
+                                />
+                                <label htmlFor="extra-relic-cb">Extra Relic</label>&nbsp;
+                                {extraRelic ? 
+                                    <Selector 
+                                        selectedOption={extraRelic} 
+                                        options={getRelicPool()} 
+                                        onChange={relic => {
+                                            setState({...state, extraRelic: relic});
+                                            console.log(relic)
+                                        }}
+                                    /> : 
+                                    null}
+                            </div>
+                        </fieldset>
+                        <div>Upper Line: <input 
+                            type="text" 
+                            defaultValue={line1} 
+                            onChange={(event) => { setState({...state, line1: event.target.value})}} 
+                        /></div>
+                        <div>Lower Line: <input 
+                            type="text" 
+                            defaultValue={line2} 
+                            onChange={(event) => { setState({...state, line2: event.target.value})}} 
+                        /></div>
+                        <div>
+                            <ThumbnailRenderer 
+                                elements={elements}
+                                line1={line1}
+                                line2={line2}
+                                face={getBaalorlordFacePool()[baalorlord]}
+                                hero={heroPool[hero]}
+                                extraRelic={getRelicPool()[extraRelic]}
+                            />
+                        </div>
+                    </div>
+                );
+            }
+
+            ReactDOM.render(<BaalorlordThumbnailGenerator />, document.getElementById("root"));
+          </script>
+    </body>
+</html>
