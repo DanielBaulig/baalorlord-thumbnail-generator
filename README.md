@@ -25,7 +25,19 @@ Generated Thumbmnail
 
 ## Usage
 
-You can watch this video (TO BE ADDED) for an introduction into how to use it. 
+Visit [www.boldlyunbuffed.com/baalorlord](https://www.boldlyunbuffed.com/baalorlord/). A preset thumbnail will render.
+By changing the different settings, you can adjust the rendered thumbnail. 
+
+### Settings
+
+- **Character**: Select the Slay the Spire character to base the thumbnail on. You can choose between Ironclad, Silent, Defect and Watcher.
+- **Baalorlord's Face**: Choose whoch of Baalorlords legendary faces to render. I've added a small selection. Pull requests that add more options are welcome.
+- **Elements**: Elements are the game pieces that take up the majority of the thumbnails space. They can be hero cards, colorless cards or relics. Choose the type by choosing one of the radio buttons. Once you've choosen a type a dropdown menu will allow you to select the specific instance of the type. Click the little [-] button to remove an element. Add additional elements by clicking the little [+] button. There's a maximum of three elements. If you only select a single element, it automatically repeats itself multiple times to fill the available area like commonly seen on Baalorlord's thumbnails.
+- **Extra Relic**: The extra relic option allows you to render a relic in addition to the elements in the main area. When selecting the checkbox the text on the thumbnail will get moved over a little to make space for the additional relic. You can choose the specific instance of the relic from the dropdown menu that shows up next to the checkbox.
+- **Upper Line, Lower Line**: These two text input fields allow you to specify the text being shown. The text will use up as much space as it can and will compress as it becomes too long. 
+
+### Saving
+Right click the thumbnail and select -> "Save Image as" to save the thumbnail.
 
 ## Support
 
