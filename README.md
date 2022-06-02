@@ -15,10 +15,12 @@ It takes the most important and recognizeable features of his thumbnails and pac
 ## Example
 
 Original Thumbnail
-<img src="https://github.com/DanielBaulig/baalorlord-thumbnail-generator/blob/main/docs/images/baalorlord-thumbnail-original.jpeg?raw=true" width="200" />
+
+<img src="https://github.com/DanielBaulig/baalorlord-thumbnail-generator/blob/main/docs/images/baalorlord-thumbnail-original.jpeg?raw=true" width="300" />
 
 Generated Thumbmnail
-<img src="https://github.com/DanielBaulig/baalorlord-thumbnail-generator/blob/main/docs/images/baalorlord-thumbnail-generated.png?raw=true" width="300" /> b
+
+<img src="https://github.com/DanielBaulig/baalorlord-thumbnail-generator/blob/main/docs/images/baalorlord-thumbnail-generated.png?raw=true" width="300" />
 
 
 ## Usage
