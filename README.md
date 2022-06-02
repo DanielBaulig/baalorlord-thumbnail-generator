@@ -1,11 +1,6 @@
 # Baalorlord Thumbnail Generator
 
-Let's see which one works.
 ![Generated Thumbnail](https://github.com/DanielBaulig/baalorlord-thumbnail-generator/blob/main/docs/images/baalorlord-thumbnail-generated.png?raw=true)
-[[https://github.com/DanielBaulig/baalorlord-thumbnail-generator/blob/main/docs/images/baalorlord-thumbnail-generated.png?raw=true]]
-[[https://github.com/DanielBaulig/baalorlord-thumbnail-generator/blob/main/docs/images/baalorlord-thumbnail-generated.png?raw=true|wdith=200px]]
-<img src="https://github.com/DanielBaulig/baalorlord-thumbnail-generator/blob/main/docs/images/baalorlord-thumbnail-generated.png?raw=true" width="200" />
-![Original Thumbnail](https://github.com/DanielBaulig/baalorlord-thumbnail-generator/blob/main/docs/images/baalorlord-thumbnail-original.jpg?raw=true)
 
 ## Background
 
@@ -16,6 +11,15 @@ Outside of his immense Slay the Spire knowledge, his YouTube thumbnails stand ou
 To celebrate Baalorlord, his YouTube channel and thumbnails, to say thank you for all the valuable information and insight I was able to get from his videos and as a fun little project to continue to engage my programming skills (I worked as a Software Engineer and Engineering Manager for many years) I created this Baalorlord Thumbnail Generator.
 
 It takes the most important and recognizeable features of his thumbnails and packs them into an easy to use generator. By configuring just a couple of settings like which character and cards or relics to feature as well as what text and most importantly which legendary Baalorlord facial expression to display, it will automatically generate and layout a thumbnail that mimics Baalorlords iconic thumbnail style.
+
+## Example
+
+Original Thumbnail
+<img src="https://github.com/DanielBaulig/baalorlord-thumbnail-generator/blob/main/docs/images/baalorlord-thumbnail-original.jpg?raw=true" width="200" />
+
+Generated Thumbmnail
+<img src="https://github.com/DanielBaulig/baalorlord-thumbnail-generator/blob/main/docs/images/baalorlord-thumbnail-generated.png?raw=true" width="300" /> 
+
 
 ## Usage
 
