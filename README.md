@@ -1,7 +1,7 @@
 # Baalorlord Thumbnail Generator
 
-![Generated Thumbnail](https://github.com/DanielBaulig/baalorlord-thumbnail-generator/blob/main/docs/images/baalorlord-thumbnail-generated.jpg?raw=true | width=200)
-![Original Thumbnail](https://github.com/DanielBaulig/baalorlord-thumbnail-generator/blob/main/docs/images/baalorlord-thumbnail-original.png?raw=true | width=200)
+![Generated Thumbnail](https://github.com/DanielBaulig/baalorlord-thumbnail-generator/blob/main/docs/images/baalorlord-thumbnail-generated.png?raw=true | width=200)
+![Original Thumbnail](https://github.com/DanielBaulig/baalorlord-thumbnail-generator/blob/main/docs/images/baalorlord-thumbnail-original.jpg?raw=true | width=200)
 
 ## Background
 
