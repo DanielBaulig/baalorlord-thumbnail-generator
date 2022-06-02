@@ -2246,7 +2246,8 @@
                 selectedElement, 
                 onElementChange, 
                 activeHeroCardPool, 
-                onElementRemove
+                onElementRemove,
+                disableRemove
             }) {
                 const relicPool = getRelicPool();
                 const colorlessCardPool = getColorlessCardPool();
@@ -2350,7 +2351,7 @@
                         <div>
                             {elementTitle} {elementSelector}
                         </div>
-                        <input type="button" onClick={onElementRemove} value="-"/>
+                        { !disableRemove ? <input type="button" onClick={onElementRemove} value="-"/> : null}
                     </div>
                 );
             }
@@ -2765,6 +2766,7 @@
                                                     ...elements.slice(i+1, elements.length)
                                                 ]
                                             })}
+                                            disableRemove={elements.length < 2}
                                             onElementChange={newElement => setState({
                                                 ...state, 
                                                 elements: [
