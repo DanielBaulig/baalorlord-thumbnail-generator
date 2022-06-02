@@ -5,6 +5,7 @@
         <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
         <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
         <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
 
         <style>
             @font-face {
@@ -19,9 +20,16 @@
             fieldset {
                 margin: 0px;
             }
+
+            .you-tube.github-fork-ribbon:before {
+                background-color: red;
+            }
         </style>
+        <style>.github-fork-ribbon:before { background-color: #333; }</style>
     </head>
     <body>
+        <a class="left-bottom github-fork-ribbon fixed" target="_blank" href="https://github.com/DanielBaulig/baalorlord-thumbnail-generator" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+        <a class="you-tube github-fork-ribbon" target="_blank" href="https://www.youtube.com/channel/UC4hXQyDZKl_ach8vyCiyJjw/" data-ribbon="Find me on YouTube" title="Find me on YouTube">Find me on YouTube</a>
         <div id="root"></div>
         <script type="text/json" id="baalorlord-faces">
             {
@@ -2697,98 +2705,100 @@
 
                 return (
                     <div>
-                        <span>Character: <HeroSelector 
-                            onHeroChange={hero => {
-                                setState({...state, hero, elements: elements.map((element) => {
-                                    if (element.type !== 'hero-card') {
-                                        return element;
-                                    }
+                        <div style={{float: 'left'}}>
+                            <span>Character: <HeroSelector 
+                                onHeroChange={hero => {
+                                    setState({...state, hero, elements: elements.map((element) => {
+                                        if (element.type !== 'hero-card') {
+                                            return element;
+                                        }
 
-                                    return {
-                                        type: 'hero-card',
-                                        key: 'strike',
-                                        item: getHeroCardPool(hero)['strike']
-                                    };
-                                })});
-                            }}
-                            hero={hero} 
-                        /></span>
-                        <span style={{marginLeft: '10px'}}>Baalorlord's Face: <Selector
-                            onChange={baalorlord => setState({...state, baalorlord})}
-                            selectedOption={baalorlord}
-                            options={getBaalorlordFacePool()}
-                        /></span>
-                        <fieldset>
-                            <legend>Elements</legend>
-                            {elements.map((el, i) => 
-                                <fieldset key={i}>
-                                    <ElementSelector 
-                                        selectedElement={elements[i]}
-                                        activeHeroCardPool={heroCardPool} 
-                                        onElementRemove={() => setState({
-                                            ...state,
-                                            elements: [
-                                                ...elements.slice(0, i),
-                                                ...elements.slice(i+1, elements.length)
-                                            ]
-                                        })}
-                                        onElementChange={newElement => setState({
-                                            ...state, 
-                                            elements: [
-                                                ...elements.slice(0, i),
-                                                newElement,
-                                                ...elements.slice(i+1, elements.length)
-                                            ]
-                                        })}
+                                        return {
+                                            type: 'hero-card',
+                                            key: 'strike',
+                                            item: getHeroCardPool(hero)['strike']
+                                        };
+                                    })});
+                                }}
+                                hero={hero} 
+                            /></span>
+                            <span style={{marginLeft: '10px'}}>Baalorlord's Face: <Selector
+                                onChange={baalorlord => setState({...state, baalorlord})}
+                                selectedOption={baalorlord}
+                                options={getBaalorlordFacePool()}
+                            /></span>
+                            <fieldset>
+                                <legend>Elements</legend>
+                                {elements.map((el, i) => 
+                                    <fieldset key={i}>
+                                        <ElementSelector 
+                                            selectedElement={elements[i]}
+                                            activeHeroCardPool={heroCardPool} 
+                                            onElementRemove={() => setState({
+                                                ...state,
+                                                elements: [
+                                                    ...elements.slice(0, i),
+                                                    ...elements.slice(i+1, elements.length)
+                                                ]
+                                            })}
+                                            onElementChange={newElement => setState({
+                                                ...state, 
+                                                elements: [
+                                                    ...elements.slice(0, i),
+                                                    newElement,
+                                                    ...elements.slice(i+1, elements.length)
+                                                ]
+                                            })}
+                                        />
+                                    </fieldset>
+                                )}
+                                { elements.length < 3 ? <input type="button" value="+" onClick={() => setState({
+                                    ...state,
+                                    elements: [
+                                        ...elements.slice(),
+                                        {type: 'hero-card', key: 'strike', item: heroCardPool['strike']}
+                                    ]
+                                })} /> : null }
+                                <div>
+                                    <input 
+                                        type="checkbox" 
+                                        id="extra-relic-cb" 
+                                        alt="Adds an extra relic spot between text and face"  
+                                        checked={!!extraRelic}
+                                        onChange={(event) => {
+                                            setState({
+                                                ...state, 
+                                                extraRelic: event.target.checked ? 
+                                                    'bagofpreparation' : 
+                                                    null 
+                                            })
+                                        }} 
                                     />
-                                </fieldset>
-                            )}
-                            { elements.length < 3 ? <input type="button" value="+" onClick={() => setState({
-                                ...state,
-                                elements: [
-                                    ...elements.slice(),
-                                    {type: 'hero-card', key: 'strike', item: heroCardPool['strike']}
-                                ]
-                            })} /> : null }
-                            <div>
-                                <input 
-                                    type="checkbox" 
-                                    id="extra-relic-cb" 
-                                    alt="Adds an extra relic spot between text and face"  
-                                    checked={!!extraRelic}
-                                    onChange={(event) => {
-                                        setState({
-                                            ...state, 
-                                            extraRelic: event.target.checked ? 
-                                                'bagofpreparation' : 
-                                                null 
-                                        })
-                                    }} 
-                                />
-                                <label htmlFor="extra-relic-cb">Extra Relic</label>&nbsp;
-                                {extraRelic ? 
-                                    <Selector 
-                                        selectedOption={extraRelic} 
-                                        options={getRelicPool()} 
-                                        onChange={relic => {
-                                            setState({...state, extraRelic: relic});
-                                            console.log(relic)
-                                        }}
-                                    /> : 
-                                    null}
-                            </div>
-                        </fieldset>
-                        <div>Upper Line: <input 
-                            type="text" 
-                            defaultValue={line1} 
-                            onChange={(event) => { setState({...state, line1: event.target.value})}} 
-                        /></div>
-                        <div>Lower Line: <input 
-                            type="text" 
-                            defaultValue={line2} 
-                            onChange={(event) => { setState({...state, line2: event.target.value})}} 
-                        /></div>
-                        <div>
+                                    <label htmlFor="extra-relic-cb">Extra Relic</label>&nbsp;
+                                    {extraRelic ? 
+                                        <Selector 
+                                            selectedOption={extraRelic} 
+                                            options={getRelicPool()} 
+                                            onChange={relic => {
+                                                setState({...state, extraRelic: relic});
+                                                console.log(relic)
+                                            }}
+                                        /> : 
+                                        null}
+                                </div>
+                            </fieldset>
+                            <div>Upper Line: <input 
+                                type="text" 
+                                defaultValue={line1} 
+                                onChange={(event) => { setState({...state, line1: event.target.value})}} 
+                            /></div>
+                            <div>Lower Line: <input 
+                                type="text" 
+                                defaultValue={line2} 
+                                onChange={(event) => { setState({...state, line2: event.target.value})}} 
+                            /></div>
+                        </div>
+                        <div style={{float:'right', maxWidth:'1200px'}}>
                             <ThumbnailRenderer 
                                 elements={elements}
                                 line1={line1}
