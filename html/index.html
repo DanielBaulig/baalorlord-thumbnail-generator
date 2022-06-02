@@ -24,6 +24,16 @@
             .you-tube.github-fork-ribbon:before {
                 background-color: red;
             }
+
+            .clear:after {
+                clear: both;
+                content: "";
+                display: table;
+            }
+
+            body {
+                padding: 15% 10%;
+            }
         </style>
         <style>.github-fork-ribbon:before { background-color: #333; }</style>
     </head>
@@ -2718,7 +2728,7 @@
                 const heroCardPool = getHeroCardPool(hero);
 
                 return (
-                    <div>
+                    <div class="clear">
                         <div style={{float: 'left'}}>
                             <span>Character: <HeroSelector 
                                 onHeroChange={hero => {
@@ -2812,7 +2822,7 @@
                                 onChange={(event) => { setState({...state, line2: event.target.value})}} 
                             /></div>
                         </div>
-                        <div style={{float:'right', maxWidth:'1200px'}}>
+                        <div style={{float:'right', maxWidth:'800px'}}>
                             <ThumbnailRenderer 
                                 elements={elements}
                                 line1={line1}
