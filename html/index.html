@@ -2422,7 +2422,8 @@
 
                     if (!bufferContextRef.current) {
                         const c = document.createElement('canvas');
-                        c.width = canvas.width;
+                        // We'll make it wider to fit more text
+                        c.width = canvas.width * 2; 
                         c.height = canvas.height;
                         bufferContextRef.current = c.getContext('2d');
                     }
@@ -2612,30 +2613,71 @@
                     // Will allow us to apply a single drop shadow to all of the
                     // text without it spilling onto the first line when the 
                     // second line gets drawn.
+                    let textUsedWidth = 0;
                     withLocalContext(bufferContext, (context) => {
-                        const fontSize = 280;
-                        context.font = `small-caps bolder ${fontSize}px Merriweather-Heavy`;
+                        function getFontString(size) {
+                            return `small-caps bolder ${size}px Merriweather-Heavy`;
+                        }
+                        const baseFontSize = 280;
+                        context.font = getFontString(baseFontSize);
                         context.strokeStyle = 'black';
                         context.lineWidth = 5;
                         
                         const line1Size = context.measureText(line1);
                         const line2Size = context.measureText(line2);
 
-                        const maxWidth = Math.min(
-                            availableTextSpace,
+                        textUsedWidth = Math.min(
                             line1Size.width,
                             line2Size.width
                         );
 
-                        const line1X = Math.max(10, (availableTextSpace - maxWidth) / 2);
-                        const line1Y = context.canvas.height - line1Size.actualBoundingBoxAscent - 30;
+                        const textSpacingForAvailableSpace = Math.max(10, (availableTextSpace - textUsedWidth) / 2);
 
-                        const line2X = line1X;
-                        const line2Y = line1Y + line1Size.actualBoundingBoxAscent + 10;
+                        const line2X = textSpacingForAvailableSpace;
+                        const line2DistanceToBottom = 25;
+                        const line2Y = context.canvas.height - line2DistanceToBottom;
+                        
+                        const line1X = textSpacingForAvailableSpace;
 
+                        const letterSpacing = -15;
+                        const line1SpacedWidth = line1Size.width + (letterSpacing * (line1.length - 1));
+                        const line2SpacedWidth = line2Size.width + (letterSpacing * (line2.length - 1));
+
+                        textUsedWidth = Math.min(line1SpacedWidth, line2SpacedWidth);
+                        
+                        const line1Delta = line2SpacedWidth - line1SpacedWidth;
+                        const line1Scale = (line1Delta + line1Size.width) / line1Size.width;
+                        
+                        const line2Delta = line1SpacedWidth - line2SpacedWidth;
+                        const line2Scale = (line2Delta + line2Size.width) / line2Size.width;
+
+                        const line1FontSize = baseFontSize * Math.min(line1Scale, 1);
+                        const line2FontSize = baseFontSize * Math.min(line2Scale, 1);
+                        
+                        context.font = getFontString(line2FontSize);
+                        const line2AdjustedSize = context.measureText(line1);
+                        
+                        const grayGradient = context.createLinearGradient(
+                            0,
+                            line2Y-line2AdjustedSize.actualBoundingBoxAscent,
+                            0, 
+                            line2Y
+                        );
+                        grayGradient.addColorStop(0, 'white');
+                        grayGradient.addColorStop(0.8, 'white');
+                        grayGradient.addColorStop(1, '#c6c6c6');
+
+                        context.fillStyle = grayGradient;
+                        context.fillTextWithSpacing(line2, line2X, line2Y, letterSpacing);
+
+                        context.font = getFontString(line1FontSize);
+                        const line1AdjustedSize = context.measureText(line1);
+                        const lineDistance = 35;
+                        const line1Y = line2Y - line2AdjustedSize.actualBoundingBoxAscent - lineDistance;
+                        
                         const goldGradient = context.createLinearGradient(
                             0,
-                            line1Y-line1Size.actualBoundingBoxAscent,
+                            line1Y-line1AdjustedSize.actualBoundingBoxAscent,
                             0, 
                             line1Y
                         );
@@ -2643,34 +2685,28 @@
                         goldGradient.addColorStop(0.6, '#faed22');
                         goldGradient.addColorStop(1, '#ebb941');
 
-                        const line2Gradient = context.createLinearGradient(
-                            0,
-                            line2Y-line2Size.actualBoundingBoxAscent,
-                            0, 
-                            line2Y
-                        );
-                        line2Gradient.addColorStop(0, 'white');
-                        line2Gradient.addColorStop(0.8, 'white');
-                        line2Gradient.addColorStop(1, '#c6c6c6');
-                        
                         context.fillStyle = goldGradient;
-                        context.fillText(line1, line1X, line1Y, maxWidth);
-
-                        context.fillStyle = line2Gradient;
-                        context.fillText(line2, line2X, line2Y, maxWidth);
+                        context.fillTextWithSpacing(line1, line1X, line1Y, letterSpacing);
                     });
-                        
-                    // Repeated draws to intensify the shadow effect
-                    enableSpreadShadow(context, 30);
-                    context.drawImage(bufferContext.canvas, 0, 0)
-                    context.drawImage(bufferContext.canvas, 0, 0)
-                    context.drawImage(bufferContext.canvas, 0, 0)
-                    context.drawImage(bufferContext.canvas, 0, 0)
-                    context.drawImage(bufferContext.canvas, 0, 0)
-                    enableSpreadShadow(context, 40);
-                    context.drawImage(bufferContext.canvas, 0, 0)
-                    enableSpreadShadow(context, 50);
-                    context.drawImage(bufferContext.canvas, 0, 0)
+
+                    withLocalContext(context, (context) => {
+                        // Scale text down to fit into available space
+                        const textScale = Math.min(availableTextSpace / textUsedWidth, 1);
+                        context.translate(0, context.canvas.height - (context.canvas.height * textScale));
+                        context.scale(textScale, textScale);
+                            
+                        // Repeated draws to intensify the shadow effect
+                        enableSpreadShadow(context, 30);
+                        context.drawImage(bufferContext.canvas, 0, 0)
+                        context.drawImage(bufferContext.canvas, 0, 0)
+                        context.drawImage(bufferContext.canvas, 0, 0)
+                        context.drawImage(bufferContext.canvas, 0, 0)
+                        context.drawImage(bufferContext.canvas, 0, 0)
+                        enableSpreadShadow(context, 40);
+                        context.drawImage(bufferContext.canvas, 0, 0)
+                        enableSpreadShadow(context, 50);
+                        context.drawImage(bufferContext.canvas, 0, 0)
+                    })
                 }, [
                     line1, 
                     line2, 
@@ -2866,6 +2902,41 @@
             }
 
             ReactDOM.render(<BaalorlordThumbnailGenerator />, document.getElementById("root"));
+
+            CanvasRenderingContext2D.prototype.fillTextWithSpacing = function(text, x, y, spacing) {
+                // Copied (and modified) from 
+                // https://stackoverflow.com/questions/8952909/letter-spacing-in-canvas-element
+                
+                // Start at position (X, Y).
+                // Measure wAll, the width of the entire string using measureText()
+                let wAll = Math.min(this.measureText(text).width);
+
+                do {
+                    // Remove the first character from the string
+                    const char = text.substr(0, 1);
+                    text = text.substr(1);
+
+                    // Print the first character at position (X, Y) using fillText()
+                    this.fillText(char, x, y);
+
+                    let wShorter = 0;
+                    // Measure wShorter, the width of the resulting shorter string using measureText().
+                    if (text !== "") {
+                        wShorter = this.measureText(text).width;
+                    }
+
+                    // Subtract the width of the shorter string from the width of the entire string, giving the kerned width of the character, wChar = wAll - wShorter
+                    const wChar = wAll - wShorter;
+
+                    // Increment X by wChar + spacing
+                    x += wChar + spacing;
+
+                    // wAll = wShorter
+                    wAll = wShorter;
+
+                    // Repeat from step 3
+                } while (text !== "");
+            }
           </script>
     </body>
 </html>
