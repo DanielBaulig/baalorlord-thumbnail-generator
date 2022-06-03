@@ -2815,6 +2815,16 @@
                                 selectedOption={baalorlord}
                                 options={getBaalorlordFacePool()}
                             /></span>
+                            <div style={{marginTop: '0.5em'}}>Upper Line: <input 
+                                type="text" 
+                                defaultValue={line1} 
+                                onChange={(event) => { setState({...state, line1: event.target.value})}} 
+                            /></div>
+                            <div style={{marginTop: '0.25em'}}>Lower Line: <input 
+                                type="text" 
+                                defaultValue={line2} 
+                                onChange={(event) => { setState({...state, line2: event.target.value})}} 
+                            /></div>
                             <fieldset>
                                 <legend>Elements</legend>
                                 {elements.map((el, i) => 
@@ -2876,16 +2886,6 @@
                                         null}
                                 </div>
                             </fieldset>
-                            <div>Upper Line: <input 
-                                type="text" 
-                                defaultValue={line1} 
-                                onChange={(event) => { setState({...state, line1: event.target.value})}} 
-                            /></div>
-                            <div>Lower Line: <input 
-                                type="text" 
-                                defaultValue={line2} 
-                                onChange={(event) => { setState({...state, line2: event.target.value})}} 
-                            /></div>
                         </div>
                         <div style={{float:'right', maxWidth:'800px'}}>
                             <ThumbnailRenderer 
