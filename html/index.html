@@ -2399,6 +2399,8 @@
             }) {
                 const canvasRef = useRef(null);
                 const elementsClone = elements.slice();
+
+                const bufferContextRef = useRef(null);
                 
                 const [ 
                     relicBackdropImage,
@@ -2417,6 +2419,16 @@
                 useEffect(() => {
                     const canvas = canvasRef.current;
                     const context = canvas.getContext('2d');
+
+                    if (!bufferContextRef.current) {
+                        const c = document.createElement('canvas');
+                        c.width = canvas.width;
+                        c.height = canvas.height;
+                        bufferContextRef.current = c.getContext('2d');
+                    }
+                    const bufferContext = bufferContextRef.current;
+                    bufferContext.clearRect(0, 0, bufferContext.canvas.width, bufferContext.canvas.height);
+
                     context.clearRect(
                         0,
                         0, 
@@ -2448,11 +2460,18 @@
                     context.save();
                     context.filter = 'brightness(120%) saturate(160%) contrast(120%)';
 
-                    function enableDropShadow() {
+                    function enableDropShadow(context) {
                         context.shadowOffsetX = 10;
                         context.shadowOffsetY = 10;
                         context.shadowColor = 'black';
-                        context.shadowBlur = 50;
+                        context.shadowBlur = 20;
+                    }
+
+                    function enableSpreadShadow(context, blur) {
+                        context.shadowOffsetX = 0;
+                        context.shadowOffsetY = 0;
+                        context.shadowColor = 'black';
+                        context.shadowBlur = blur;
                     }
 
                     function withLocalContext(context, f) {
@@ -2474,9 +2493,6 @@
                     // Give elements a little more space if there are more than 2
                     const availableElementsWidth = (elementsCount > 2 ? 1600 : 1500);
                     let availableTextSpace = availableElementsWidth;
-
-                    const line1Size = context.measureText(line1);
-                    const line2Size = context.measureText(line2);
 
                     const availableHeight = 640;
                     const widthAvailablePerElement = (availableElementsWidth - (elementsClone[0].type === 'relic' ? approximateRelicWidth + additionalRelicPadding : approximateCardWidth + additionalCardPadding)) / (elementsCount - 1);
@@ -2504,7 +2520,7 @@
                         context.scale(relicFrameScale, relicFrameScale);
                         
                         withLocalContext(context, (context) => {
-                            enableDropShadow();
+                            enableDropShadow(context);
                             context.translate(x, y);
                             context.drawImage(
                                 relicBackdropImage,
@@ -2526,7 +2542,7 @@
                             case 'colorless-card':
                             case 'hero-card':
                                 withLocalContext(context, (context) => {
-                                    enableDropShadow();
+                                    enableDropShadow(context);
                                     
                                     const cardX = Math.min(
                                         Math.max( 
@@ -2592,64 +2608,69 @@
                         );
                     }
 
-                    const fontSize = 320;
-                    context.font = `bold ${fontSize}px Merriweather-Heavy`;
-                    context.strokeStyle = 'black';
-                    context.lineWidth = 5;
-                    
-                    enableDropShadow();
+                    // Drawing text into the bufferContext 
+                    // Will allow us to apply a single drop shadow to all of the
+                    // text without it spilling onto the first line when the 
+                    // second line gets drawn.
+                    withLocalContext(bufferContext, (context) => {
+                        const fontSize = 280;
+                        context.font = `small-caps bolder ${fontSize}px Merriweather-Heavy`;
+                        context.strokeStyle = 'black';
+                        context.lineWidth = 5;
+                        
+                        const line1Size = context.measureText(line1);
+                        const line2Size = context.measureText(line2);
 
-                    const maxWidth = Math.min(
-                        availableTextSpace,
-                        line1Size.width,
-                        line2Size.width
-                    );
+                        const maxWidth = Math.min(
+                            availableTextSpace,
+                            line1Size.width,
+                            line2Size.width
+                        );
 
-                    const line1X = Math.max(10, (availableTextSpace - maxWidth) / 2);
-                    const line1Y = 1080 / 2 + (fontSize * 5/6);
+                        const line1X = Math.max(10, (availableTextSpace - maxWidth) / 2);
+                        const line1Y = context.canvas.height - line1Size.actualBoundingBoxAscent - 30;
 
-                    const line2X = line1X;
-                    const line2Y = line1Y + line1Size.actualBoundingBoxAscent + 10;
+                        const line2X = line1X;
+                        const line2Y = line1Y + line1Size.actualBoundingBoxAscent + 10;
 
-                    const goldGradient = context.createLinearGradient(
-                        0,
-                        line1Y-line1Size.actualBoundingBoxAscent,
-                        0, 
-                        line1Y
-                    );
-                    goldGradient.addColorStop(0, 'yellow');
-                    goldGradient.addColorStop(0.6, 'yellow');
-                    goldGradient.addColorStop(0.8, 'gold');
-                    goldGradient.addColorStop(0.9, 'gold');
-                    goldGradient.addColorStop(1, 'orange');
+                        const goldGradient = context.createLinearGradient(
+                            0,
+                            line1Y-line1Size.actualBoundingBoxAscent,
+                            0, 
+                            line1Y
+                        );
+                        goldGradient.addColorStop(0, '#faed22');
+                        goldGradient.addColorStop(0.6, '#faed22');
+                        goldGradient.addColorStop(1, '#ebb941');
 
-                    const line2Gradient = context.createLinearGradient(
-                        0,
-                        line2Y-line2Size.actualBoundingBoxAscent,
-                        0, 
-                        line2Y
-                    );
-                    line2Gradient.addColorStop(0, 'white');
-                    line2Gradient.addColorStop(0.8, 'white');
-                    line2Gradient.addColorStop(0.95, 'gray');
-                    line2Gradient.addColorStop(1, 'black');
-                    
-                    
-                    context.fillStyle = goldGradient;
-                    // Doubling up to intensify the drop shadow effect
-                    context.fillText(line1, line1X, line1Y, maxWidth);
-                    context.strokeText(line1, line1X, line1Y, maxWidth);
-                    context.fillText(line1, line1X, line1Y, maxWidth);
-                    context.strokeText(line1, line1X, line1Y, maxWidth);
+                        const line2Gradient = context.createLinearGradient(
+                            0,
+                            line2Y-line2Size.actualBoundingBoxAscent,
+                            0, 
+                            line2Y
+                        );
+                        line2Gradient.addColorStop(0, 'white');
+                        line2Gradient.addColorStop(0.8, 'white');
+                        line2Gradient.addColorStop(1, '#c6c6c6');
+                        
+                        context.fillStyle = goldGradient;
+                        context.fillText(line1, line1X, line1Y, maxWidth);
 
-                    context.fillStyle = line2Gradient;
-                    // Doubling up to intensify the drop shadow effect
-                    context.fillText(line2, line2X, line2Y, maxWidth);
-                    context.strokeText(line2, line2X, line2Y, maxWidth);
-                    context.fillText(line2, line2X, line2Y, maxWidth);
-                    context.strokeText(line2, line2X, line2Y, maxWidth);
-                    
-
+                        context.fillStyle = line2Gradient;
+                        context.fillText(line2, line2X, line2Y, maxWidth);
+                    });
+                        
+                    // Repeated draws to intensify the shadow effect
+                    enableSpreadShadow(context, 30);
+                    context.drawImage(bufferContext.canvas, 0, 0)
+                    context.drawImage(bufferContext.canvas, 0, 0)
+                    context.drawImage(bufferContext.canvas, 0, 0)
+                    context.drawImage(bufferContext.canvas, 0, 0)
+                    context.drawImage(bufferContext.canvas, 0, 0)
+                    enableSpreadShadow(context, 40);
+                    context.drawImage(bufferContext.canvas, 0, 0)
+                    enableSpreadShadow(context, 50);
+                    context.drawImage(bufferContext.canvas, 0, 0)
                 }, [
                     line1, 
                     line2, 
