@@ -2182,7 +2182,7 @@
 
         <script type="text/babel">
             //@flow
-            const {useState, useRef, useEffect, useMemo} = React;
+            const {useState, useRef, useEffect, useImperativeHandle, forwardRef} = React;
             const useId = () => {
                 return useRef(crypto.randomUUID()).current;
             }
@@ -2406,9 +2406,18 @@
                 line2, 
                 elements,
                 extraRelic
-            }) {
+            }, ref) {
                 const canvasRef = useRef(null);
                 const elementsClone = elements.slice();
+
+                useImperativeHandle(ref, () => ({
+                    download: (filename) => {
+                       const link = document.createElement('a');
+                       link.download = filename;
+                       link.href = canvasRef.current.toDataURL('image/png');
+                       link.click();
+                    }
+                }));
 
                 const bufferContextRef = useRef(null);
                 
@@ -2736,6 +2745,7 @@
                     />
                 );
             }
+            ThumbnailRenderer = forwardRef(ThumbnailRenderer);
 
             function getHeroCardPool(heroKey) {
                 const heroPool = getHeroPool();
@@ -2798,11 +2808,13 @@
                 });
                 const {hero, elements, line1, line2, baalorlord, extraRelic} = state;
 
+                const rendererRef = useRef();
+
                 const heroPool = getHeroPool();
                 const heroCardPool = getHeroCardPool(hero);
 
                 return (
-                    <div class="clear">
+                    <div className="clear">
                         <div style={{float: 'left'}}>
                             <span>Character: <HeroSelector 
                                 onHeroChange={hero => {
@@ -2905,6 +2917,13 @@
                                 face={getBaalorlordFacePool()[baalorlord]}
                                 hero={heroPool[hero]}
                                 extraRelic={getRelicPool()[extraRelic]}
+                                ref={rendererRef}
+                            />
+                            <input
+                                style={{marginTop: '5px'}}
+                                type="button"
+                                value="Download"
+                                onClick={() => rendererRef.current.download('thumbnail.png')}
                             />
                         </div>
                     </div>
